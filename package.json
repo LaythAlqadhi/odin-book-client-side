@@ -1,0 +1,88 @@
+{
+  "name": "react app",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "lint": "eslint --fix src/**/*.{js,jsx}"
+  },
+  "license": "ISC",
+  "prettier": {
+    "singleQuote": true,
+    "tabWidth": 2,
+    "useTabs": false,
+    "trailingComma": "all",
+    "printWidth": 80,
+    "plugins": [
+      "prettier-plugin-tailwindcss"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "airbnb",
+      "prettier",
+      "plugin:react/recommended"
+    ],
+    "plugins": [
+      "prettier",
+      "react"
+    ],
+    "env": {
+      "browser": true,
+      "jest": true
+    },
+    "rules": {
+      "prettier/prettier": [
+        "error"
+      ],
+      "react/jsx-filename-extension": [
+        1,
+        {
+          "extensions": [
+            ".js",
+            ".jsx"
+          ]
+        }
+      ],
+      "jsx-a11y/label-has-associated-control": [
+        "error",
+        {
+          "labelComponents": ["label"]
+        }
+      ]
+    },
+    "ignorePatterns": [
+      "node_modules/"
+    ]
+  },
+  "dependencies": {
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.21.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.1.6",
+    "@testing-library/react": "^14.1.2",
+    "@testing-library/user-event": "^14.5.2",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^8.56.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-react": "^7.33.2",
+    "jsdom": "^23.0.1",
+    "postcss": "^8.4.32",
+    "prettier": "^3.1.1",
+    "prettier-plugin-tailwindcss": "^0.5.10",
+    "tailwindcss": "^3.4.0",
+    "vite": "^5.0.10",
+    "vitest": "^1.1.0"
+  }
+}
