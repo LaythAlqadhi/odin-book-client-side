@@ -50,7 +50,9 @@
       "jsx-a11y/label-has-associated-control": [
         "error",
         {
-          "labelComponents": ["label"]
+          "labelComponents": [
+            "label"
+          ]
         }
       ]
     },

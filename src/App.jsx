@@ -1,8 +1,17 @@
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import SignIn from './pages/SignIn';
+import { useAuth } from './contexts/AuthContext';
 import './App.css';
 
-export default function App() {
-  return <h1 className="text-3xl font-bold underline">
-    Hello world!
-  </h1>
+function App() {
+  const { token } = useAuth();
+
+  return (
+    <Routes>
+      <Route path="sign-in" element={<SignIn />} />
+    </Routes>
+  );
 }
+
+export default App;
