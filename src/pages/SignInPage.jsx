@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 
-function SignIn() {
+function SignInPage() {
   const { signIn } = useAuth();
   const [inputs, setInputs] = useState({ username: '', password: '' });
 
@@ -51,10 +51,8 @@ function SignIn() {
         value={inputs.password}
         onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
       />
-      <button type="submit" onClick={handleSubmit}>
-        Sign In
-      </button>
+      <button type="submit" onClick={handleSubmit}>Sign In</button>
     </form>
   );
 }
-export default SignIn;
+export default SignInPage;

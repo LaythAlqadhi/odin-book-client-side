@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import SignIn from './pages/SignIn';
+import SignInPage from './pages/SignInPage';
+import SignUpPage from './pages/SignUpPage';
 import { useAuth } from './contexts/AuthContext';
 import './App.css';
 
@@ -9,7 +10,8 @@ function App() {
 
   return (
     <Routes>
-      <Route path="sign-in" element={<SignIn />} />
+      <Route path="signin" element={<SignInPage />} />
+      <Route path="signup" element={<SignUpPage />} />
     </Routes>
   );
 }

@@ -3,7 +3,7 @@ import { render, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { vi } from 'vitest';
-import SignIn from '../SignIn';
+import SignUpPage from '../SignUpPage';
 
 beforeAll(() => {
   global.fetch = vi.fn(() =>
@@ -18,32 +18,44 @@ afterAll(() => {
   vi.clearAllMocks();
 });
 
-describe('SignIn component', () => {
-  it('renders SignIn component correctly', async () => {
+describe('SignUp component', () => {
+  it('renders SignUp component correctly', async () => {
     render(
       <Router>
-        <SignIn />
+        <SignUpPage />
       </Router>,
     );
 
+    const firstName = screen.getByLabelText('First Name');
+    const lastName = screen.getByLabelText('Last Name');
     const username = screen.getByLabelText('Username');
+    const email = screen.getByLabelText('Email Address');
     const password = screen.getByLabelText('Password');
-    const button = screen.getByText('Sign In');
+    const passwordConfirmation = screen.getByLabelText('Password Confirmation');
+    const button = screen.getByText('Sign Up');
 
+    expect(firstName).toBeInTheDocument();
+    expect(lastName).toBeInTheDocument();
     expect(username).toBeInTheDocument();
+    expect(email).toBeInTheDocument();
     expect(password).toBeInTheDocument();
+    expect(passwordConfirmation).toBeInTheDocument();
     expect(button).toBeInTheDocument();
 
     expect(fetch).not.toHaveBeenCalled();
 
     await act(async () => {
+      await userEvent.type(firstName, 'mockFirstName');
+      await userEvent.type(lastName, 'mockLastName');
       await userEvent.type(username, 'mockUsername');
+      await userEvent.type(email, 'mockEmail');
       await userEvent.type(password, 'mockPassword');
+      await userEvent.type(passwordConfirmation, 'mockPasswordConfirmation');
       await userEvent.click(button);
     });
-
+    
     expect(fetch).toHaveBeenCalledWith(
-      'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/api/auth/signin',
+      'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/api/auth/signup',
       {
         mode: 'cors',
         method: 'POST',
@@ -51,8 +63,12 @@ describe('SignIn component', () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          firstName: 'mockFirstName',
+          lastName: 'mockLastName',
           username: 'mockUsername',
+          email: 'mockEmail',
           password: 'mockPassword',
+          passwordConfirmation: 'mockPasswordConfirmation'
         }),
       },
     );
