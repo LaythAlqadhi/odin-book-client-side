@@ -7,7 +7,7 @@ function SignInPage() {
   const { signIn } = useAuth();
   const [inputs, setInputs] = useState({ username: '', password: '' });
 
-  const handleSignWithGitHub = (e) => {
+  const handleContinueWithGitHub = (e) => {
     e.preventDefault();
 
     window.location.href = 'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1/auth/github';
@@ -42,7 +42,6 @@ function SignInPage() {
 
   return (
     <main>
-      <h1>Sign In</h1>
       <form>
         <label htmlFor="username">Username</label>
         <input

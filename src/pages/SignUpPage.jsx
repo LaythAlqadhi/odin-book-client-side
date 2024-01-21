@@ -43,7 +43,6 @@ function SignUpPage() {
 
   return (
     <main>
-      <h1>Sign Up</h1>
       <form>
         <label htmlFor="firstName">First Name</label>
         <input
