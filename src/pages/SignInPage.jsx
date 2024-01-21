@@ -39,7 +39,7 @@ function SignInPage() {
   };
 
   return (
-    <main>
+    <div>
       <form>
         <label htmlFor="username">Username</label>
         <input
@@ -64,7 +64,7 @@ function SignInPage() {
       <button type="button" onClick={handleContinueWithGitHub}>Continue with GitHub</button>
       or
       <button type="button" onClick={() => navigate('/auth/signup')}>Sign Up</button>
-    </main>
+    </div>
   );
 }
 export default SignInPage;

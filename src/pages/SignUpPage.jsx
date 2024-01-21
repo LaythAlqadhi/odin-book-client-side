@@ -42,7 +42,7 @@ function SignUpPage() {
   };
 
   return (
-    <main>
+    <div>
       <form>
         <label htmlFor="firstName">First Name</label>
         <input
@@ -102,7 +102,7 @@ function SignUpPage() {
       </form>
       <button type="button" onClick={handleContinueWithGitHub}>Continue with GitHub</button>
       <button type="button" onClick={() => navigate('/auth/signin')}>Sign In</button>
-    </main>
+    </div>
   );
 }
 export default SignUpPage;
