@@ -61,7 +61,7 @@ function SignInPage() {
         onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
       />
       <button type="submit" onClick={handleSubmit}>Sign In</button>
-      <button type="submit" onClick={handleSignWithGitHub}>Sign In with GitHub</button>
+      <button type="submit" onClick={handleContinueWithGitHub}>Continue with GitHub</button>
     </form>
   );
 }

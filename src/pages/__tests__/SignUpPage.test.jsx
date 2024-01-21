@@ -32,7 +32,8 @@ describe('SignUp component', () => {
     const email = screen.getByLabelText('Email Address');
     const password = screen.getByLabelText('Password');
     const passwordConfirmation = screen.getByLabelText('Password Confirmation');
-    const button = screen.getByText('Sign Up');
+    const submit = screen.getByText('Sign Up');
+    const continueWithGitHub = screen.getByText('Continue with GitHub');
 
     expect(firstName).toBeInTheDocument();
     expect(lastName).toBeInTheDocument();
@@ -40,7 +41,8 @@ describe('SignUp component', () => {
     expect(email).toBeInTheDocument();
     expect(password).toBeInTheDocument();
     expect(passwordConfirmation).toBeInTheDocument();
-    expect(button).toBeInTheDocument();
+    expect(submit).toBeInTheDocument();
+    expect(continueWithGitHub).toBeInTheDocument();
 
     expect(fetch).not.toHaveBeenCalled();
 
@@ -51,7 +53,7 @@ describe('SignUp component', () => {
       await userEvent.type(email, 'mockEmail');
       await userEvent.type(password, 'mockPassword');
       await userEvent.type(passwordConfirmation, 'mockPasswordConfirmation');
-      await userEvent.click(button);
+      await userEvent.click(submit);
     });
     
     expect(fetch).toHaveBeenCalledWith(

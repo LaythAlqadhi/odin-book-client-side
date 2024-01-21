@@ -29,12 +29,12 @@ describe('SignIn component', () => {
     const username = screen.getByLabelText('Username');
     const password = screen.getByLabelText('Password');
     const submit = screen.getByText('Sign In');
-    const signInWithGitHub = screen.getByText('Sign In with GitHub');
+    const continueWithGitHub = screen.getByText('Continue with GitHub');
 
     expect(username).toBeInTheDocument();
     expect(password).toBeInTheDocument();
     expect(submit).toBeInTheDocument();
-    expect(signInWithGitHub).toBeInTheDocument();
+    expect(continueWithGitHub).toBeInTheDocument();
 
     expect(fetch).not.toHaveBeenCalled();
 
