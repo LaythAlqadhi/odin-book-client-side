@@ -41,28 +41,31 @@ function SignInPage() {
   };
 
   return (
-    <form>
-      <label htmlFor="username">Username</label>
-      <input
-        type="text"
-        name="username"
-        id="username"
-        placeholder="Username"
-        value={inputs.username}
-        onChange={(e) => setInputs({ ...inputs, username: e.target.value })}
-      />
-      <label htmlFor="password">Password</label>
-      <input
-        type="password"
-        name="password"
-        id="password"
-        placeholder="Password"
-        value={inputs.password}
-        onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
-      />
-      <button type="submit" onClick={handleSubmit}>Sign In</button>
-      <button type="submit" onClick={handleContinueWithGitHub}>Continue with GitHub</button>
-    </form>
+    <main>
+      <h1>Sign In</h1>
+      <form>
+        <label htmlFor="username">Username</label>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          placeholder="Username"
+          value={inputs.username}
+          onChange={(e) => setInputs({ ...inputs, username: e.target.value })}
+        />
+        <label htmlFor="password">Password</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Password"
+          value={inputs.password}
+          onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
+        />
+        <button type="submit" onClick={handleSubmit}>Sign In</button>
+        <button type="submit" onClick={handleContinueWithGitHub}>Continue with GitHub</button>
+      </form>
+    </main>
   );
 }
 export default SignInPage;
