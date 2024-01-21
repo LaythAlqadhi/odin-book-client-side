@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 function SignInPage() {
+  const navigate = useNavigate();
   const { signIn } = useAuth();
   const [inputs, setInputs] = useState({ username: '', password: '' });
+
+  const handleSignWithGitHub = (e) => {
+    e.preventDefault();
+
+    window.location.href = 'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1/auth/github';
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     fetch(
-      'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/api/auth/signin',
+      'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1/auth/signin',
       {
         mode: 'cors',
         method: 'POST',
@@ -26,7 +34,8 @@ function SignInPage() {
         return response.json();
       })
       .then((result) => {
-        signIn(result);
+        signIn(result.token);
+        navigate('/');
       })
       .catch((err) => console.error(err));
   };
@@ -52,6 +61,7 @@ function SignInPage() {
         onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
       />
       <button type="submit" onClick={handleSubmit}>Sign In</button>
+      <button type="submit" onClick={handleSignWithGitHub}>Sign In with GitHub</button>
     </form>
   );
 }

@@ -12,11 +12,17 @@ function SignUpPage() {
     passwordConfirmation: '',
   });
 
+  const handleSignWithGitHub = (e) => {
+    e.preventDefault();
+    
+    window.location.href = 'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1/auth/github';
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     fetch(
-      'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/api/auth/signup',
+      'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1/auth/signup',
       {
         mode: 'cors',
         method: 'POST',
@@ -31,9 +37,6 @@ function SignUpPage() {
           throw new Error('Server error');
         }
         return response.json();
-      })
-      .then((result) => {
-        signIn(result);
       })
       .catch((err) => console.error(err));
   };
@@ -95,6 +98,7 @@ function SignUpPage() {
         onChange={(e) => setInputs({ ...inputs, passwordConfirmation: e.target.value })}
       />
       <button type="submit" onClick={handleSubmit}>Sign Up</button>
+      <button type="submit" onClick={handleSignWithGitHub}>Sign Up with GitHub</button>
     </form>
   );
 }

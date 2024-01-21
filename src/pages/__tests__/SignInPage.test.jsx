@@ -5,7 +5,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { vi } from 'vitest';
 import SignInPage from '../SignInPage';
 
-beforeAll(() => {
+beforeEach(() => {
   global.fetch = vi.fn(() =>
     Promise.resolve({
       json: () => Promise.resolve({ token: 'mockToken' }),
@@ -14,7 +14,7 @@ beforeAll(() => {
   );
 });
 
-afterAll(() => {
+afterEach(() => {
   vi.clearAllMocks();
 });
 
@@ -28,22 +28,24 @@ describe('SignIn component', () => {
 
     const username = screen.getByLabelText('Username');
     const password = screen.getByLabelText('Password');
-    const button = screen.getByText('Sign In');
+    const submit = screen.getByText('Sign In');
+    const signInWithGitHub = screen.getByText('Sign In with GitHub');
 
     expect(username).toBeInTheDocument();
     expect(password).toBeInTheDocument();
-    expect(button).toBeInTheDocument();
+    expect(submit).toBeInTheDocument();
+    expect(signInWithGitHub).toBeInTheDocument();
 
     expect(fetch).not.toHaveBeenCalled();
 
     await act(async () => {
       await userEvent.type(username, 'mockUsername');
       await userEvent.type(password, 'mockPassword');
-      await userEvent.click(button);
+      await userEvent.click(submit);
     });
 
     expect(fetch).toHaveBeenCalledWith(
-      'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/api/auth/signin',
+      'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1/auth/signin',
       {
         mode: 'cors',
         method: 'POST',
