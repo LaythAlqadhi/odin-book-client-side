@@ -36,7 +36,7 @@ function SignUpPage() {
         if (response.status >= 400) {
           throw new Error('Server error');
         }
-        return response.json();
+        return navigate('/auth/signin');
       })
       .catch((err) => console.error(err));
   };
