@@ -8,7 +8,7 @@ const Layout = ({ children }) => {
       </header>
       <main>{children}</main>
       <footer>
-        <p>Odinbook 2024</p>
+        <p>Odinbook © 2024</p>
       </footer>
     </div>
   );
