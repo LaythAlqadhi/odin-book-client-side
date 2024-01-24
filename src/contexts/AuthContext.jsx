@@ -2,26 +2,34 @@ import React, { useState, createContext, useContext } from 'react';
 import PropTypes from 'prop-types';
 
 const AuthContext = createContext({
-  token: null,
+  payload: null,
   signIn: () => {},
   signOut: () => {},
 });
 
 function AuthProvider({ children }) {
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [payload, setPayload] = useState(localStorage.getItem('payload'));
+  const [token, setToken] = useState(payload?.token);
+  const [user, setUser] = useState(payload?.user);
 
-  const signIn = (newToken) => {
-    localStorage.setItem('token', newToken);
-    setToken(newToken);
+  const signIn = (payload) => {
+    localStorage.setItem('payload', payload);
+    setPayload(payload);
+    setToken(payload.token);
+    setUser(payload.user);
   };
 
   const signOut = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('payload');
+    setPayload(null);
     setToken(null);
+    setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ token, signIn, signOut }}>
+    <AuthContext.Provider
+      value={{ payload, token, user, signIn, signOut }}
+    >
       {children}
     </AuthContext.Provider>
   );
