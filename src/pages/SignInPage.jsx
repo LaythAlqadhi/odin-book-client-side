@@ -32,7 +32,7 @@ function SignInPage() {
         return response.json();
       })
       .then((result) => {
-        signIn(result.token);
+        signIn(result.payload);
         navigate('/');
       })
       .catch((err) => console.error(err));

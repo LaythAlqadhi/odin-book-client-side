@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { useAuth } from  '../contexts/AuthContext';
 
 function ProtectedRoute({ redirectPath, isAuthenticated, children }) {
-  const { token } = useAuth();
+  const { payload } = useAuth();
 
-  if ((isAuthenticated && !token) || (!isAuthenticated && token)) {
+  if ((isAuthenticated && !payload?.token) || (!isAuthenticated && payload?.token)) {
     return <Navigate to={redirectPath} replace />;
   }
 

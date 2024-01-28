@@ -18,7 +18,9 @@ afterEach(() => {
   vi.clearAllMocks();
 });
 
-const MockComponent = () => <div data-testid="mockComponent">mock component</div>;
+function MockComponent() {
+  return <div data-testid="mockComponent">mock component</div>;
+}
 
 describe('ProtectedRoute component', () => {
   it('prevents protected route if theres no token', () => {
@@ -38,7 +40,7 @@ describe('ProtectedRoute component', () => {
             />
           </Routes>
         </MemoryRouter>
-      </AuthProvider>
+      </AuthProvider>,
     );
 
     const mockComponent = screen.queryByTestId('mockComponent');
@@ -47,7 +49,7 @@ describe('ProtectedRoute component', () => {
 
   it('renders protected route if theres a token', () => {
     localStorage.getItem.mockReturnValue('mockToken');
-    
+
     render(
       <AuthProvider>
         <MemoryRouter initialEntries={['/private']}>
@@ -62,7 +64,7 @@ describe('ProtectedRoute component', () => {
             />
           </Routes>
         </MemoryRouter>
-      </AuthProvider>
+      </AuthProvider>,
     );
 
     const mockComponent = screen.queryByTestId('mockComponent');

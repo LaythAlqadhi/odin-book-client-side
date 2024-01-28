@@ -7,29 +7,45 @@ const AuthContext = createContext({
   signOut: () => {},
 });
 
-function AuthProvider({ children }) {
-  const [payload, setPayload] = useState(localStorage.getItem('payload'));
-  const [token, setToken] = useState(payload?.token);
-  const [user, setUser] = useState(payload?.user);
+const getPayloadWithExpiry = () => {
+  const itemStr = localStorage.getItem('payload');
+  if (!itemStr) {
+    return null;
+  }
 
-  const signIn = (payload) => {
-    localStorage.setItem('payload', payload);
-    setPayload(payload);
-    setToken(payload.token);
-    setUser(payload.user);
+  const item = JSON.parse(itemStr);
+  const now = new Date();
+
+  if (now.getTime() > item.expiry) {
+    localStorage.removeItem('payload');
+    return null;
+  }
+
+  return item.value;
+};
+
+function AuthProvider({ children }) {
+  const [payload, setPayload] = useState(getPayloadWithExpiry());
+
+  const signIn = (newPayload, expirationInMinutes = 360) => {
+    const now = new Date();
+    const expirationTime = now.getTime() + expirationInMinutes * 60 * 1000;
+    const payloadWithExpiry = {
+      value: newPayload,
+      expiry: expirationTime,
+    };
+
+    localStorage.setItem('payload', JSON.stringify(payloadWithExpiry));
+    setPayload(newPayload);
   };
 
   const signOut = () => {
     localStorage.removeItem('payload');
     setPayload(null);
-    setToken(null);
-    setUser(null);
   };
 
   return (
-    <AuthContext.Provider
-      value={{ payload, token, user, signIn, signOut }}
-    >
+    <AuthContext.Provider value={{ payload, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
