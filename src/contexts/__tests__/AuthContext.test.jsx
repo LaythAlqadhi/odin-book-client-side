@@ -9,7 +9,7 @@ test('AuthContext provides signIn and signOut functions', async () => {
 
     return (
       <div>
-        <button type="button" onClick={() => signIn('testToken')}>
+        <button type="button" onClick={() => signIn({ token: 'mockToken', user: {} })}>
           Sign In
         </button>
         <button type="button" onClick={signOut}>
@@ -28,12 +28,15 @@ test('AuthContext provides signIn and signOut functions', async () => {
   await act(async () => {
     await userEvent.click(screen.getByText('Sign In'));
   });
-
-  expect(localStorage.getItem('token')).toBe('testToken');
+  
+  const getPayload = () => JSON.parse(localStorage.getItem('payload'));
+  
+  expect(getPayload().value).toEqual({ token: 'mockToken', user: {} });
 
   await act(async () => {
     await userEvent.click(screen.getByText('Sign Out'));
   });
+  
+  expect(getPayload()?.value).toEqual(null || undefined);
 
-  expect(localStorage.getItem('token')).toBe(null);
 });

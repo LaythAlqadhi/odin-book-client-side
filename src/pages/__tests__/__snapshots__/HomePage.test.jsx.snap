@@ -1,3 +1,0 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`HomePage component > renders HomePage component in the document correctly 1`] = `undefined`;
