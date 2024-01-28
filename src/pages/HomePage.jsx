@@ -6,11 +6,11 @@ import useFetch from '../hooks/useFetch';
 const API_URL = 'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1/posts'
 
 function HomePage() {
-  const { token } = useAuth();
+  const { payload } = useAuth();
   const { fetchData, data, loading, error } = useFetch();
 
   useEffect(() => {
-    fetchData(API_URL, token);
+    fetchData(API_URL, payload?.token);
   }, []);
 
   if (loading) {
