@@ -24,7 +24,7 @@ ProtectedRoute.defaultProps = {
 ProtectedRoute.propTypes = {
   redirectPath: PropTypes.string,
   isAuthenticated: PropTypes.bool,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
 };
 
 export default ProtectedRoute;
