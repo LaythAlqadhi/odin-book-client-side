@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, waitFor, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 import HomePage from '../HomePage';
 import useFetch from '../../hooks/useFetch';

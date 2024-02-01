@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import useFetch from '../hooks/useFetch';
 
 const API_URL =
@@ -30,9 +31,7 @@ function UserProfileHeader({ userId, token, user }) {
   }, [API_URL, userId, token]);
 
   const isOwner =
-    user && userId &&
-    user.id === userId ||
-    user.username === userId;
+    (user && userId && user.id === userId) || user.username === userId;
 
   if (loading) return <div>Loading...</div>;
 
@@ -64,12 +63,20 @@ function UserProfileHeader({ userId, token, user }) {
         <div>
           <span aria-label="Name">{data.user.profile.displayName}</span>
           <span aria-label="Username">{data.user.username}</span>
-          {data.user.profile.bio && <span aria-label="Bio">{data.user.profile.bio}</span>}
+          {data.user.profile.bio && (
+            <span aria-label="Bio">{data.user.profile.bio}</span>
+          )}
         </div>
         {isOwner ? <OwnerProfileButtons /> : <VisitorProfileButtons />}
       </div>
     );
   }
 }
+
+UserProfileHeader.propTypes = {
+  userId: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
+  user: PropTypes.instanceOf(Object).isRequired,
+};
 
 export default UserProfileHeader;

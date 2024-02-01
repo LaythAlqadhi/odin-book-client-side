@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { MemoryRouter as Router } from 'react-router-dom';
 import { vi } from 'vitest';
+import PropTypes from 'prop-types';
 import useFetch from '../../hooks/useFetch';
 import UserProfileHeader from '../UserProfileHeader';
 
@@ -11,26 +11,26 @@ const mockCommentData = {
   author: {
     username: 'mockUsername',
     profile: {
-      avatar: 'mockAvatar.jpg'
-    }
+      avatar: 'mockAvatar.jpg',
+    },
   },
   likes: 100,
   content: 'mockContent',
-}
+};
 
 const mockPostData = {
   id: 'mockId',
   author: {
     username: 'mockUsername',
     profile: {
-      avatar: 'mockAvatar.jpg'
-    }
+      avatar: 'mockAvatar.jpg',
+    },
   },
   likes: 100,
   content: 'mockContent',
   comments: [mockCommentData],
   createdAt: Date.now(),
-}
+};
 
 const mockUserData = {
   id: 'mockId',
@@ -43,7 +43,7 @@ const mockUserData = {
   followers: [],
   following: [],
   posts: [mockPostData],
-}
+};
 
 beforeAll(() => {
   vi.mock('../../hooks/useFetch');
@@ -53,13 +53,22 @@ afterAll(() => {
   vi.clearAllMocks();
 });
 
-const MockUserProfileHeader = ({ userId, token, user }) => {
+function MockUserProfileHeader({ userId, token, user }) {
   return (
-    <Router inititalEntries={[`/profile/${mockUserData.username}`]} initialIndex={0}>
+    <Router
+      inititalEntries={[`/profile/${mockUserData.username}`]}
+      initialIndex={0}
+    >
       <UserProfileHeader userId={userId} token={token} user={user} />
     </Router>
   );
 }
+
+MockUserProfileHeader.propTypes = {
+  userId: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
+  user: PropTypes.instanceOf(Object).isRequired,
+};
 
 describe('UserProfileHeader component', () => {
   it('should render loading when the data still not resolved', () => {
@@ -75,7 +84,7 @@ describe('UserProfileHeader component', () => {
         userId={mockUserData.username}
         token="mockToken"
         user={mockUserData}
-      />
+      />,
     );
 
     const divElement = screen.getByText(/Loading/i);
@@ -96,7 +105,7 @@ describe('UserProfileHeader component', () => {
         userId={mockUserData.username}
         token="mockToken"
         user={mockUserData}
-      />
+      />,
     );
 
     const divElement = screen.getByText(/Something went wrong/i);
@@ -119,7 +128,7 @@ describe('UserProfileHeader component', () => {
         userId={mockUserData.username}
         token="mockToken"
         user={mockUserData}
-      />
+      />,
     );
 
     const displayNameElement = screen.getByText(/mockDisplayName/i);
@@ -142,7 +151,7 @@ describe('UserProfileHeader component', () => {
         userId={mockUserData.username}
         token="mockToken"
         user={mockUserData}
-      />
+      />,
     );
 
     const avatarElement = screen.getByAltText(/Avatar/i);
@@ -166,10 +175,10 @@ describe('UserProfileHeader component', () => {
         userId={mockUserData.username}
         token="mockToken"
         user={mockUserData}
-      />
+      />,
     );
 
-    const postsElement = screen.getByRole('button', { name: /1 Posts/i});
+    const postsElement = screen.getByRole('button', { name: /1 Posts/i });
 
     expect(postsElement).toBeInTheDocument();
     expect(postsElement.textContent).toContain(mockUserData.posts.length);
@@ -190,13 +199,17 @@ describe('UserProfileHeader component', () => {
         userId={mockUserData.username}
         token="mockToken"
         user={mockUserData}
-      />
+      />,
     );
 
-    const followersElement = screen.getByRole('button', { name: /0 Followers/i});
-    
+    const followersElement = screen.getByRole('button', {
+      name: /0 Followers/i,
+    });
+
     expect(followersElement).toBeInTheDocument();
-    expect(followersElement.textContent).toContain(mockUserData.followers.length);
+    expect(followersElement.textContent).toContain(
+      mockUserData.followers.length,
+    );
   });
 
   it('should render the number of following', () => {
@@ -214,13 +227,17 @@ describe('UserProfileHeader component', () => {
         userId={mockUserData.username}
         token="mockToken"
         user={mockUserData}
-      />
+      />,
     );
 
-    const followingElement = screen.getByRole('button', { name: /0 Following/i});
+    const followingElement = screen.getByRole('button', {
+      name: /0 Following/i,
+    });
 
     expect(followingElement).toBeInTheDocument();
-    expect(followingElement.textContent).toContain(mockUserData.following.length);
+    expect(followingElement.textContent).toContain(
+      mockUserData.following.length,
+    );
   });
 
   it('should render the user profile info', () => {
@@ -238,7 +255,7 @@ describe('UserProfileHeader component', () => {
         userId={mockUserData.username}
         token="mockToken"
         user={mockUserData}
-      />
+      />,
     );
 
     const nameElement = screen.getByLabelText('Name');
@@ -252,7 +269,7 @@ describe('UserProfileHeader component', () => {
 
   it('should not render bio element when user data dont provide a bio', () => {
     mockUserData.profile.bio = null;
-    
+
     useFetch.mockImplementation(() => ({
       fetchData: vi.fn(),
       data: {
@@ -267,11 +284,11 @@ describe('UserProfileHeader component', () => {
         userId={mockUserData.username}
         token="mockToken"
         user={mockUserData}
-      />
+      />,
     );
-    
+
     const bioElement = screen.queryByLabelText('Bio');
-    
+
     expect(bioElement).not.toBeInTheDocument();
 
     mockUserData.profile.bio = 'mockBio';
@@ -292,11 +309,15 @@ describe('UserProfileHeader component', () => {
         userId={mockUserData.username}
         token="mockToken"
         user={mockUserData}
-      />
+      />,
     );
 
-    const editProfileElement = screen.getByRole('button', { name: 'Edit profile' });
-    const shareProfileElement = screen.getByRole('button', { name: 'Share profile' });
+    const editProfileElement = screen.getByRole('button', {
+      name: 'Edit profile',
+    });
+    const shareProfileElement = screen.getByRole('button', {
+      name: 'Share profile',
+    });
 
     expect(editProfileElement).toBeInTheDocument();
     expect(shareProfileElement).toBeInTheDocument();
@@ -317,7 +338,7 @@ describe('UserProfileHeader component', () => {
         userId="mockUser2"
         token="mockToken"
         user={mockUserData}
-      />
+      />,
     );
 
     const followElement = screen.getByRole('button', { name: 'Follow' });

@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
 
 function SignUpPage() {
   const navigate = useNavigate();
-  const { signIn } = useAuth();
   const [inputs, setInputs] = useState({
     firstName: '',
     lastName: '',
@@ -15,8 +13,9 @@ function SignUpPage() {
   });
 
   const handleContinueWithGitHub = () => {
-    window.location.href = 'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1/auth/github';
-  }
+    window.location.href =
+      'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1/auth/github';
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -96,12 +95,23 @@ function SignUpPage() {
           id="passwordConfirmation"
           placeholder="Password Confirmation"
           value={inputs.passwordConfirmation}
-          onChange={(e) => setInputs({ ...inputs, passwordConfirmation: e.target.value })}
+          onChange={(e) =>
+            setInputs({
+              ...inputs,
+              passwordConfirmation: e.target.value,
+            })
+          }
         />
-        <button type="submit" onClick={handleSubmit}>Sign Up</button>
+        <button type="submit" onClick={handleSubmit}>
+          Sign Up
+        </button>
       </form>
-      <button type="button" onClick={handleContinueWithGitHub}>Continue with GitHub</button>
-      <button type="button" onClick={() => navigate('/auth/signin')}>Sign In</button>
+      <button type="button" onClick={handleContinueWithGitHub}>
+        Continue with GitHub
+      </button>
+      <button type="button" onClick={() => navigate('/auth/signin')}>
+        Sign In
+      </button>
     </div>
   );
 }

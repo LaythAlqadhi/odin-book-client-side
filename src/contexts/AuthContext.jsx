@@ -45,6 +45,7 @@ function AuthProvider({ children }) {
   };
 
   return (
+    /* eslint-disable-next-line react/jsx-no-constructed-context-values */
     <AuthContext.Provider value={{ payload, signIn, signOut }}>
       {children}
     </AuthContext.Provider>

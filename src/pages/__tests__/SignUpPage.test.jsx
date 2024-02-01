@@ -55,7 +55,7 @@ describe('SignUp component', () => {
       await userEvent.type(passwordConfirmation, 'mockPasswordConfirmation');
       await userEvent.click(submit);
     });
-    
+
     expect(fetch).toHaveBeenCalledWith(
       'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1/auth/signup',
       {
@@ -70,7 +70,7 @@ describe('SignUp component', () => {
           username: 'mockUsername',
           email: 'mockEmail',
           password: 'mockPassword',
-          passwordConfirmation: 'mockPasswordConfirmation'
+          passwordConfirmation: 'mockPasswordConfirmation',
         }),
       },
     );

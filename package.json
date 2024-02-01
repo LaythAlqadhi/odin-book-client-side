@@ -34,6 +34,9 @@
       "browser": true,
       "jest": true
     },
+    "parserOptions": {
+      "ecmaVersion": 2023
+    },
     "rules": {
       "prettier/prettier": [
         "error"

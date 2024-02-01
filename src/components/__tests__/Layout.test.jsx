@@ -4,8 +4,8 @@ import Layout from '../Layout';
 
 describe('Layout component', () => {
   it('renders Layout component correctly', () => {
-    render(<Layout/>);
-    
+    render(<Layout />);
+
     expect(screen.container).toMatchSnapshot();
   });
 });

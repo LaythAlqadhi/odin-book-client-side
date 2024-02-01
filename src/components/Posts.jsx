@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import useFetch from '../hooks/useFetch';
 import Post from './Post';
 
@@ -20,5 +21,10 @@ function Posts({ userId, token }) {
     return data.posts.map((post) => <Post key={post.id} post={post} />);
   }
 }
+
+Posts.propTypes = {
+  userId: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
+};
 
 export default Posts;

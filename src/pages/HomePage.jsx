@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import useFetch from '../hooks/useFetch';
 
-const API_URL = 'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1/posts'
+const API_URL =
+  'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1/posts';
 
 function HomePage() {
   const { payload } = useAuth();
@@ -27,7 +27,7 @@ function HomePage() {
 
   return (
     <div>
-      {data.posts.map(post => (
+      {data.posts.map((post) => (
         <div key={post.id}>
           <div>
             <img src={post.author.profile.avatar} alt="Author Avatar" />
@@ -44,9 +44,12 @@ function HomePage() {
             <p>Comments: {post.comments.length}</p>
           </div>
           <div>
-            {post.comments.map(comment => (
-              <div key={comment['_id']}>
-                <img src={comment.author.profile.avatar} alt="Commenter Avatar" />
+            {post.comments.map((comment) => (
+              <div key={comment.id}>
+                <img
+                  src={comment.author.profile.avatar}
+                  alt="Commenter Avatar"
+                />
                 <div>
                   <p>{comment.author.username}</p>
                   <p>{comment.content}</p>

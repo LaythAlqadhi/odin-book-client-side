@@ -50,16 +50,14 @@ describe('ProtectedRoute component', () => {
   it('renders protected route if theres a token', () => {
     const expirationTime = new Date().getTime() + 10 * 60 * 1000;
     const payloadWithExpiry = {
-      value:  {
+      value: {
         token: 'mockToken',
         user: {},
       },
       expiry: expirationTime,
     };
-    
-    localStorage
-      .getItem
-      .mockReturnValue(JSON.stringify(payloadWithExpiry));
+
+    localStorage.getItem.mockReturnValue(JSON.stringify(payloadWithExpiry));
 
     render(
       <AuthProvider>

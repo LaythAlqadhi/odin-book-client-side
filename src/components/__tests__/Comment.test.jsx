@@ -6,12 +6,12 @@ const mockCommentData = {
   author: {
     username: 'mockUsername',
     profile: {
-      avatar: 'mockAvatar.jpg'
-    }
+      avatar: 'mockAvatar.jpg',
+    },
   },
   likes: 100,
   content: 'mockContent',
-}
+};
 
 describe('Comment component', () => {
   it('should render the container correctly', () => {

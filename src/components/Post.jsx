@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Comments from './Comments';
 
 function Post({ post }) {
@@ -38,5 +39,9 @@ function Post({ post }) {
     </div>
   );
 }
+
+Post.propTypes = {
+  post: PropTypes.instanceOf(Object).isRequired,
+};
 
 export default Post;

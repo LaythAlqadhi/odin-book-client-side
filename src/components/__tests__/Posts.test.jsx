@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { MemoryRouter as Router } from 'react-router-dom';
 import { vi } from 'vitest';
+import PropTypes from 'prop-types';
 import useFetch from '../../hooks/useFetch';
 import Posts from '../Posts';
 
@@ -11,26 +11,26 @@ const mockCommentData = {
   author: {
     username: 'mockUsername',
     profile: {
-      avatar: 'mockAvatar.jpg'
-    }
+      avatar: 'mockAvatar.jpg',
+    },
   },
   likes: 100,
   content: 'mockContent',
-}
+};
 
 const mockPostData = {
   id: 'mockId',
   author: {
     username: 'mockUsername',
     profile: {
-      avatar: 'mockAvatar.jpg'
-    }
+      avatar: 'mockAvatar.jpg',
+    },
   },
   likes: 100,
   content: 'mockContent',
   comments: [mockCommentData],
   createdAt: Date.now(),
-}
+};
 
 beforeAll(() => {
   vi.mock('../../hooks/useFetch');
@@ -40,13 +40,18 @@ afterAll(() => {
   vi.clearAllMocks();
 });
 
-const MockPosts = ({ userId, token }) => {
+function MockPosts({ userId, token }) {
   return (
     <Router>
       <Posts userId={userId} token={token} />
     </Router>
   );
 }
+
+MockPosts.propTypes = {
+  userId: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
+};
 
 describe('Posts component', () => {
   it('should render loading when the data still not resolved', () => {
@@ -56,12 +61,9 @@ describe('Posts component', () => {
       loading: true,
       error: null,
     }));
-    
+
     render(
-      <MockPosts
-        userId={mockPostData.author.username}
-        token="mockToken"
-      />
+      <MockPosts userId={mockPostData.author.username} token="mockToken" />,
     );
 
     const divElement = screen.getByText(/Loading/i);
@@ -76,12 +78,9 @@ describe('Posts component', () => {
       loading: false,
       error: true,
     }));
-    
+
     render(
-      <MockPosts
-        userId={mockPostData.author.username}
-        token="mockToken"
-      />
+      <MockPosts userId={mockPostData.author.username} token="mockToken" />,
     );
 
     const divElement = screen.getByText(/Something went wrong/i);
@@ -93,21 +92,18 @@ describe('Posts component', () => {
     useFetch.mockImplementation(() => ({
       fetchData: vi.fn(),
       data: {
-        posts: [mockPostData]
+        posts: [mockPostData],
       },
       loading: false,
       error: false,
     }));
 
     render(
-      <MockPosts
-        userId={mockPostData.author.username}
-        token="mockToken"
-      />
+      <MockPosts userId={mockPostData.author.username} token="mockToken" />,
     );
 
     const usernameElement = screen.getByText(/mockContent/i);
-    
+
     expect(usernameElement).toBeInTheDocument();
   });
 });

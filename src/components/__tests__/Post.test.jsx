@@ -2,39 +2,44 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter as Router } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Post from '../Post';
 
 const mockCommentData = {
   author: {
     username: 'mockUsername',
     profile: {
-      avatar: 'mockAvatar.jpg'
-    }
+      avatar: 'mockAvatar.jpg',
+    },
   },
   likes: 100,
   content: 'mockContent',
-}
+};
 
 const mockPostData = {
   author: {
     username: 'mockUsername',
     profile: {
-      avatar: 'mockAvatar.jpg'
-    }
+      avatar: 'mockAvatar.jpg',
+    },
   },
   likes: 100,
   content: 'mockContent',
   comments: [mockCommentData],
   createdAt: Date.now(),
-}
+};
 
-const MockPost = ({ post }) => {
+function MockPost({ post }) {
   return (
     <Router>
       <Post post={post} />
     </Router>
   );
 }
+
+MockPost.propTypes = {
+  post: PropTypes.instanceOf(Object).isRequired,
+};
 
 describe('Post component', () => {
   it('should render the container correctly', () => {
@@ -59,10 +64,14 @@ describe('Post component', () => {
   it('should render the username correctly', () => {
     render(<MockPost post={mockPostData} />);
 
-    const linkElement = screen.getByRole('link', { name: mockPostData.author.username });
+    const linkElement = screen.getByRole('link', {
+      name: mockPostData.author.username,
+    });
 
     expect(linkElement).toBeInTheDocument();
-    expect(linkElement.href).toContain (`profile/${mockPostData.author.username}`);
+    expect(linkElement.href).toContain(
+      `profile/${mockPostData.author.username}`,
+    );
   });
 
   it('should render like button correctly', () => {
@@ -76,7 +85,9 @@ describe('Post component', () => {
   it('should render comment button correctly', () => {
     render(<MockPost post={mockPostData} />);
 
-    const commentButtonElement = screen.getByRole('button', { name: 'Comment' });
+    const commentButtonElement = screen.getByRole('button', {
+      name: 'Comment',
+    });
 
     expect(commentButtonElement).toBeInTheDocument();
   });
@@ -101,14 +112,16 @@ describe('Post component', () => {
     render(<MockPost post={mockPostData} />);
 
     const dateElement = screen.getByLabelText(/Date/i);
-    
+
     expect(dateElement).toBeInTheDocument();
   });
 
   it('should render the comments when View all comments is clicked', async () => {
     render(<MockPost post={mockPostData} />);
 
-    const buttonElement = screen.getByRole('button', { name: 'View all 1 comments' });
+    const buttonElement = screen.getByRole('button', {
+      name: 'View all 1 comments',
+    });
 
     await userEvent.click(buttonElement);
 
