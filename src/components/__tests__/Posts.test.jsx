@@ -48,7 +48,7 @@ const MockPosts = ({ userId, token }) => {
   );
 }
 
-describe('Post component', () => {
+describe('Posts component', () => {
   it('should render loading when the data still not resolved', () => {
     useFetch.mockImplementation(() => ({
       fetchData: vi.fn(),

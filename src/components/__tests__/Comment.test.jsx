@@ -14,7 +14,7 @@ const mockCommentData = {
 }
 
 describe('Comment component', () => {
-  it('should render the same data that passed into comment prop', () => {
+  it('should render the container correctly', () => {
     render(<Comment comment={mockCommentData} />);
 
     const divElement = screen.getByTestId(/comment-container/i);
