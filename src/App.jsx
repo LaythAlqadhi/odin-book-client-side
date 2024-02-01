@@ -6,6 +6,7 @@ import AuthPage from './pages/AuthPage';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import ProfilePage from './pages/ProfilePage';
+import FollowRequestsPage from './pages/FollowRequestsPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
 
@@ -33,6 +34,14 @@ function App() {
         <Route path="signup" element={<SignUpPage />} />
       </Route>
       <Route path="profile/:userId" element={<ProfilePage />} />
+      <Route
+        path="/notifications"
+        element={
+          <ProtectedRoute redirectPath="auth">
+            <FollowRequestsPage />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 }
