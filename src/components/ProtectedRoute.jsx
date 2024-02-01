@@ -19,6 +19,7 @@ function ProtectedRoute({ redirectPath, isAuthenticated, children }) {
 ProtectedRoute.defaultProps = {
   redirectPath: 'auth/login',
   isAuthenticated: true,
+  children: null,
 };
 
 ProtectedRoute.propTypes = {

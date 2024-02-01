@@ -15,6 +15,10 @@ function Layout({ children }) {
   );
 }
 
+Layout.defaultProps = {
+  children: null,
+};
+
 Layout.propTypes = {
   children: PropTypes.node,
 };
