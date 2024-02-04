@@ -34,7 +34,7 @@ function FollowRequestsPage() {
     <div data-testid="follow-requests-container">
       {data && data?.user && 
         data.user.followingRequests.map((user) => (
-          <Link key={user.id} to={`profile/${user.id}`}>
+          <Link key={user.id} to={`/profile/${user.id}`}>
             <img src={user.profile.avatar} alt="Avatar" />
             <div>
               <span>{user.username}</span>
