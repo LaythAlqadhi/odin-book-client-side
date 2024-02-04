@@ -13,7 +13,7 @@ function FollowRequestsPage() {
 
   useEffect(() => {
     fetchFollowRequests(
-      `${API_URL}/user/${payload.user.username}/followingRequests`,
+      `${API_URL}/user/${payload.user.username}/following-requests`,
       payload?.token,
     );
   }, [API_URL, payload]);
