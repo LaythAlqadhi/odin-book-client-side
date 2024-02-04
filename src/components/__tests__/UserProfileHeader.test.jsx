@@ -42,6 +42,7 @@ const mockUserData = {
   },
   followers: [],
   following: [],
+  followingRequests: [],
   posts: [mockPostData],
 };
 
@@ -53,13 +54,13 @@ afterAll(() => {
   vi.clearAllMocks();
 });
 
-function MockUserProfileHeader({ userId, token, user }) {
+function MockUserProfileHeader({ userId, token, me }) {
   return (
     <Router
       inititalEntries={[`/profile/${mockUserData.username}`]}
       initialIndex={0}
     >
-      <UserProfileHeader userId={userId} token={token} user={user} />
+      <UserProfileHeader userId={userId} token={token} me={me} />
     </Router>
   );
 }
@@ -67,7 +68,7 @@ function MockUserProfileHeader({ userId, token, user }) {
 MockUserProfileHeader.propTypes = {
   userId: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
-  user: PropTypes.instanceOf(Object).isRequired,
+  me: PropTypes.instanceOf(Object).isRequired,
 };
 
 describe('UserProfileHeader component', () => {
@@ -83,7 +84,7 @@ describe('UserProfileHeader component', () => {
       <MockUserProfileHeader
         userId={mockUserData.username}
         token="mockToken"
-        user={mockUserData}
+        me={mockUserData}
       />,
     );
 
@@ -104,7 +105,7 @@ describe('UserProfileHeader component', () => {
       <MockUserProfileHeader
         userId={mockUserData.username}
         token="mockToken"
-        user={mockUserData}
+        me={mockUserData}
       />,
     );
 
@@ -127,7 +128,7 @@ describe('UserProfileHeader component', () => {
       <MockUserProfileHeader
         userId={mockUserData.username}
         token="mockToken"
-        user={mockUserData}
+        me={mockUserData}
       />,
     );
 
@@ -150,7 +151,7 @@ describe('UserProfileHeader component', () => {
       <MockUserProfileHeader
         userId={mockUserData.username}
         token="mockToken"
-        user={mockUserData}
+        me={mockUserData}
       />,
     );
 
@@ -174,7 +175,7 @@ describe('UserProfileHeader component', () => {
       <MockUserProfileHeader
         userId={mockUserData.username}
         token="mockToken"
-        user={mockUserData}
+        me={mockUserData}
       />,
     );
 
@@ -198,7 +199,7 @@ describe('UserProfileHeader component', () => {
       <MockUserProfileHeader
         userId={mockUserData.username}
         token="mockToken"
-        user={mockUserData}
+        me={mockUserData}
       />,
     );
 
@@ -226,7 +227,7 @@ describe('UserProfileHeader component', () => {
       <MockUserProfileHeader
         userId={mockUserData.username}
         token="mockToken"
-        user={mockUserData}
+        me={mockUserData}
       />,
     );
 
@@ -254,7 +255,7 @@ describe('UserProfileHeader component', () => {
       <MockUserProfileHeader
         userId={mockUserData.username}
         token="mockToken"
-        user={mockUserData}
+        me={mockUserData}
       />,
     );
 
@@ -283,7 +284,7 @@ describe('UserProfileHeader component', () => {
       <MockUserProfileHeader
         userId={mockUserData.username}
         token="mockToken"
-        user={mockUserData}
+        me={mockUserData}
       />,
     );
 
@@ -308,7 +309,7 @@ describe('UserProfileHeader component', () => {
       <MockUserProfileHeader
         userId={mockUserData.username}
         token="mockToken"
-        user={mockUserData}
+        me={mockUserData}
       />,
     );
 
@@ -337,7 +338,7 @@ describe('UserProfileHeader component', () => {
       <MockUserProfileHeader
         userId="mockUser2"
         token="mockToken"
-        user={mockUserData}
+        me={mockUserData}
       />,
     );
 
