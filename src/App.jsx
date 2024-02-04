@@ -17,13 +17,13 @@ function App() {
       <Route
         index
         element={
-          <ProtectedRoute redirectPath="auth">
+          <ProtectedRoute redirectPath="/auth">
             <HomePage />
           </ProtectedRoute>
         }
       />
       <Route
-        path="auth"
+        path="/auth"
         element={
           <ProtectedRoute redirectPath="/" isAuthenticated={false}>
             <AuthPage />
@@ -33,11 +33,11 @@ function App() {
         <Route path="signin" element={<SignInPage />} />
         <Route path="signup" element={<SignUpPage />} />
       </Route>
-      <Route path="profile/:userId" element={<ProfilePage />} />
+      <Route path="/profile/:userId" element={<ProfilePage />} />
       <Route
-        path="/notifications"
+        path="/notification/follow-requests"
         element={
-          <ProtectedRoute redirectPath="auth">
+          <ProtectedRoute redirectPath="/auth">
             <FollowRequestsPage />
           </ProtectedRoute>
         }
