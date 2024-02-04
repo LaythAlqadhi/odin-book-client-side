@@ -14,7 +14,7 @@ function ProfilePage() {
         <UserProfileHeader
           userId={userId}
           token={payload.token}
-          user={payload.user}
+          me={payload.user}
         />
       </div>
       <div>
