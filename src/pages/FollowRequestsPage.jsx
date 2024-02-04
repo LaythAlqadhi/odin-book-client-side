@@ -13,7 +13,7 @@ function FollowRequestsPage() {
 
   useEffect(() => {
     fetchFollowRequests(
-      `${API_URL}/user/${payload.user.username}/following-requests`,
+      `${API_URL}/user/${payload?.user.id}/following-requests`,
       payload?.token,
     );
   }, [API_URL, payload]);
@@ -32,8 +32,8 @@ function FollowRequestsPage() {
 
   return (
     <div data-testid="follow-requests-container">
-      {data &&
-        data.users.map((user) => (
+      {data && data?.user && 
+        data.user.followingRequests.map((user) => (
           <Link key={user.id} to={`profile/${user.id}`}>
             <img src={user.profile.avatar} alt="Avatar" />
             <div>
