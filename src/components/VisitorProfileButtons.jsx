@@ -7,10 +7,10 @@ const API_URL =
 
 function VisitorProfileButtons({ token, me, user }) {
   const [isFollowing, setIsFollowing] = useState(
-    user.followers.includes(me.username),
+    user.followers.includes(me.id),
   );
   const [isRequested, setIsRequested] = useState(
-    user.followingRequests.includes(me.username),
+    user.followingRequests.includes(me.id),
   );
 
   const { fetchData: fetchRequestFollow } = useFetch();
@@ -19,7 +19,7 @@ function VisitorProfileButtons({ token, me, user }) {
 
   const handleRequestFollow = () => {
     fetchRequestFollow(
-      `${API_URL}/user/${user.username}/follow-request`,
+      `${API_URL}/user/${user.id}/follow-request`,
       token,
       'POST',
     );
@@ -28,7 +28,7 @@ function VisitorProfileButtons({ token, me, user }) {
 
   const handleUnfollow = () => {
     fetchRemoveFollow(
-      `${API_URL}/user/${user.username}/following/${me.username}`,
+      `${API_URL}/user/${user.id}/following/${me.id}`,
       token,
       'DELETE',
     );
@@ -37,7 +37,7 @@ function VisitorProfileButtons({ token, me, user }) {
 
   const handleRemoveRequest = () => {
     fetchRemoveRequest(
-      `${API_URL}/user/${user.username}/follow-request`,
+      `${API_URL}/user/${user.id}/follow-request`,
       token,
       'DELETE',
     );

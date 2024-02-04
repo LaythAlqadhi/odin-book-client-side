@@ -7,10 +7,10 @@ function Post({ post }) {
   return (
     <div data-testid="post-container">
       <div>
-        <button type="button">
+        <Link to={`/profile/${post.author.id}`}>
           <img src={post.author.profile.avatar} alt="Avatar" />
-        </button>
-        <Link to={`profile/${post.author.username}`}>
+        </Link>
+        <Link to={`/profile/${post.author.id}`}>
           {post.author.username}
         </Link>
       </div>

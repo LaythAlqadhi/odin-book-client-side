@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 function Comment({ comment }) {
   return (
     <div data-testid="comment-container">
-      <img src={comment.author.profile.avatar} alt="Avatar" />
+      <Link to={`/profile/${comment.author.id}`}>
+        <img src={comment.author.profile.avatar} alt="Avatar" />
+      </Link>
       <div>
-        <span>{comment.author.username}</span>
+        <Link to={`/profile/${comment.author.id}`}>{comment.author.username}</Link>
         <p>{comment.content}</p>
       </div>
       <div>

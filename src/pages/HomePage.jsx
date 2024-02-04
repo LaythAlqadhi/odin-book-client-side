@@ -31,11 +31,13 @@ function HomePage() {
       {data.posts.map((post) => (
         <div key={post.id}>
           <div>
-            <img src={post.author.profile.avatar} alt="Author Avatar" />
-            <Link to={`/profile/${post.author.username}`}>
-              <p>{post.author.username}</p>
-              <p>{post.author.profile.displayName}</p>
+            <Link to={`/profile/${post.author.id}`}>
+              <img src={post.author.profile.avatar} alt="Author Avatar" />
             </Link>
+            <div>
+              <Link to={`/profile/${post.author.id}`}>{post.author.username}</Link>
+              <Link to={`/profile/${post.author.id}`}>{post.author.profile.displayName}</Link>
+            </div>
           </div>
           <div>
             <p>{post.content}</p>
@@ -47,10 +49,13 @@ function HomePage() {
           <div>
             {post.comments.map((comment) => (
               <div key={comment.id}>
-                <img
-                  src={comment.author.profile.avatar}
-                  alt="Commenter Avatar"
-                />
+                <Link to={`/profile/${comment.author.id}`}>
+                  <img
+                    src={comment.author.profile.avatar}
+                    alt="Commenter Avatar"
+                  />
+                </Link>
+                
                 <div>
                   <p>{comment.author.username}</p>
                   <p>{comment.content}</p>

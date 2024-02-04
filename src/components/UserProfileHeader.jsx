@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
 import OwnerProfileButtons from './OwnerProfileButtons';
 import VisitorProfileButtons from './VisitorProfileButtons';
@@ -14,7 +15,7 @@ function UserProfileHeader({ userId, token, me }) {
     fetchData(`${API_URL}/user/${userId}`, token);
   }, [API_URL, userId, token]);
 
-  const isOwner = (me && userId && me.id === userId) || (me.username === userId);
+  const isOwner = me && userId && me.id === userId;
 
   if (loading) return <div>Loading...</div>;
 
@@ -27,7 +28,9 @@ function UserProfileHeader({ userId, token, me }) {
       <div>
         <div>
           <div>
-            <img src={user.profile.avatar} alt="Avatar" />
+            <Link to={`/profile/${user.id}`}>
+              <img src={user.profile.avatar} alt="Avatar" />
+            </Link>
             <span>+</span>
           </div>
           <div>
