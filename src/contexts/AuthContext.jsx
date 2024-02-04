@@ -14,9 +14,8 @@ const getPayloadWithExpiry = () => {
   }
 
   const item = JSON.parse(itemStr);
-  const now = new Date();
 
-  if (now.getTime() > item.expiry) {
+  if (Date.now() >= item.expiry) {
     localStorage.removeItem('payload');
     return null;
   }
@@ -28,8 +27,7 @@ function AuthProvider({ children }) {
   const [payload, setPayload] = useState(getPayloadWithExpiry());
 
   const signIn = (newPayload, expirationInMinutes = 360) => {
-    const now = new Date();
-    const expirationTime = now.getTime() + expirationInMinutes * 60 * 1000;
+    const expirationTime = Date.now() + expirationInMinutes * 60 * 1000;
     const payloadWithExpiry = {
       value: newPayload,
       expiry: expirationTime,
