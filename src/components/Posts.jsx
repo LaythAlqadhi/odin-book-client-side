@@ -6,11 +6,11 @@ import Post from './Post';
 const API_URL =
   'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1';
 
-function Posts({ userId, token }) {
+function Posts({ token, userId }) {
   const { fetchData, data, loading, error } = useFetch();
 
   useEffect(() => {
-    fetchData(`${API_URL}/posts/${userId}`, token);
+      fetchData(`${API_URL}/posts/${userId ? userId : ''}`, token);
   }, [API_URL, userId, token]);
 
   if (loading) return <div>Loading...</div>;
@@ -22,9 +22,13 @@ function Posts({ userId, token }) {
   }
 }
 
+Posts.defaultProps = {
+  userId: null,
+};
+
 Posts.propTypes = {
-  userId: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
+  userId: PropTypes.string,
 };
 
 export default Posts;
