@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import useFetch from '../hooks/useFetch';
 
@@ -31,10 +32,10 @@ function HomePage() {
         <div key={post.id}>
           <div>
             <img src={post.author.profile.avatar} alt="Author Avatar" />
-            <div>
+            <Link to={`/profile/${post.author.username}`}>
               <p>{post.author.username}</p>
               <p>{post.author.profile.displayName}</p>
-            </div>
+            </Link>
           </div>
           <div>
             <p>{post.content}</p>
