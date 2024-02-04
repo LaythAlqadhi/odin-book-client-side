@@ -8,14 +8,23 @@ const API_URL =
 
 function FollowRequestsPage() {
   const { payload } = useAuth();
-  const { fetchData, data, loading, error } = useFetch();
+  const { fetchData: fetchFollowRequests, data, loading, error } = useFetch();
+  const { fetchData: fetchFollowRespond } = useFetch();
 
   useEffect(() => {
-    fetchData(
-      `${API_URL}/user/${payload.user.id}/followingRequests`,
+    fetchFollowRequests(
+      `${API_URL}/user/${payload.user.username}/followingRequests`,
       payload?.token,
     );
   }, [API_URL, payload]);
+
+  const handleFollowRespond = (status) => {
+    fetchFollowRespond(
+      `${API_URL}/user/${payload.user.username}/follow-respond/${status}`,
+      payload?.token,
+      'POST',
+    );
+  };
 
   if (loading) return <div>Loading...</div>;
 
@@ -32,8 +41,18 @@ function FollowRequestsPage() {
               <span>requested to follow you.</span>
             </div>
             <div>
-              <button type="button">Confirm</button>
-              <button type="button">Delete</button>
+              <button
+                type="button"
+                onClick={() => handleFollowRespond('confirmed')}
+              >
+                Confirm
+              </button>
+              <button
+                type="button"
+                onClick={() => handleFollowRespond('deleted')}
+              >
+                Delete
+              </button>
             </div>
           </Link>
         ))}
