@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useFetch from '../hooks/useFetch';
+
+const API_URL = 'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1';
 
 function SignUpPage() {
   const navigate = useNavigate();
+  const { fetchData, data, loading, error } = useFetch();
   const [inputs, setInputs] = useState({
     firstName: '',
     lastName: '',
@@ -12,36 +16,19 @@ function SignUpPage() {
     passwordConfirmation: '',
   });
 
-  const handleContinueWithGitHub = () => {
-    window.location.href =
-      'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1/auth/github';
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    fetch(
-      'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1/auth/signup',
-      {
-        mode: 'cors',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(inputs),
-      },
-    )
-      .then((response) => {
-        if (response.status >= 400) {
-          throw new Error('Server error');
-        }
-        return navigate('/auth/signin');
-      })
-      .catch((err) => console.error(err));
+    fetchData(`${API_URL}/auth/signup`, null, 'POST', inputs);
   };
 
+  if (error) return <div>Something went wrong.</div>;
+
+  if (loading) return <div>Loading...</div>;
+
+  if (data) navigate('/auth/signin');
+
   return (
-    <div>
+    <div data-testid="sign-up-container">
       <form>
         <label htmlFor="firstName">First Name</label>
         <input
@@ -106,7 +93,7 @@ function SignUpPage() {
           Sign Up
         </button>
       </form>
-      <button type="button" onClick={handleContinueWithGitHub}>
+      <button type="button" onClick={() => window.location.href = `${API_URL}/auth/github`}>
         Continue with GitHub
       </button>
       <button type="button" onClick={() => navigate('/auth/signin')}>

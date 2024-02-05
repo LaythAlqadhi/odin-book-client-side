@@ -1,46 +1,32 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import useFetch from '../hooks/useFetch';
+
+const API_URL = 'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1';
 
 function SignInPage() {
   const navigate = useNavigate();
   const { signIn } = useAuth();
+  const { fetchData, data, loading, error } = useFetch();
   const [inputs, setInputs] = useState({ username: '', password: '' });
-
-  const handleContinueWithGitHub = () => {
-    window.location.href =
-      'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1/auth/github';
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    fetch(
-      'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1/auth/signin',
-      {
-        mode: 'cors',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(inputs),
-      },
-    )
-      .then((response) => {
-        if (response.status >= 400) {
-          throw new Error('Server error');
-        }
-        return response.json();
-      })
-      .then((result) => {
-        signIn(result.payload);
-        navigate('/');
-      })
-      .catch((err) => console.error(err));
+    fetchData(`${API_URL}/auth/signin`, null, 'POST', inputs);
   };
 
+  if (error) return <div>Something went wrong.</div>;
+
+  if (loading) return <div>Loading...</div>;
+
+  if (data) {
+    signIn(data.payload);
+    navigate('/');
+  } 
+
   return (
-    <div>
+    <div data-testid="sign-in-container">
       <form>
         <label htmlFor="username">Username</label>
         <input
@@ -64,7 +50,7 @@ function SignInPage() {
           Sign In
         </button>
       </form>
-      <button type="button" onClick={handleContinueWithGitHub}>
+      <button type="button" onClick={() => window.location.href = `${API_URL}/auth/github`}>
         Continue with GitHub
       </button>
       or
