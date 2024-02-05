@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Comment from '../Comment';
 
 const mockCommentData = {
@@ -14,13 +15,17 @@ const mockCommentData = {
   content: 'mockContent',
 };
 
-const MockComment = ({ comment }) => {
+function MockComment({ comment }) {
   return (
     <MemoryRouter>
       <Comment comment={comment} />
     </MemoryRouter>
   );
 }
+
+MockComment.propTypes = {
+  comment: PropTypes.instanceOf(Object).isRequired,
+};
 
 describe('Comment component', () => {
   it('should render the container correctly', () => {

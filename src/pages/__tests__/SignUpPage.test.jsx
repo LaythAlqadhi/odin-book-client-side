@@ -1,12 +1,11 @@
 import React from 'react';
-import { render, screen, act } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen, act, fireEvent } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { vi } from 'vitest';
 import SignUpPage from '../SignUpPage';
 import useFetch from '../../hooks/useFetch';
 
-const navigate = vi.fn()
+const navigate = vi.fn();
 
 beforeAll(() => {
   vi.mock('../../hooks/useFetch');
@@ -28,7 +27,6 @@ function MockSignUpPage() {
   );
 }
 
-
 describe('SignUpPage component', () => {
   it('should render loading when the data still not resolved', () => {
     useFetch.mockImplementation(() => ({
@@ -37,7 +35,7 @@ describe('SignUpPage component', () => {
       loading: true,
       error: false,
     }));
-    
+
     render(<MockSignUpPage />);
 
     const divElement = screen.getByTestId(/loading/i);
@@ -52,7 +50,7 @@ describe('SignUpPage component', () => {
       loading: false,
       error: true,
     }));
-    
+
     render(<MockSignUpPage />);
 
     const divElement = screen.getByText(/Something went wrong/i);
@@ -60,7 +58,7 @@ describe('SignUpPage component', () => {
     expect(divElement).toBeInTheDocument();
   });
 
-  it('should navigate to sign in page when sign up button is clicked', async () => {
+  it('should navigate to sign in page when sign up button is clicked', () => {
     useFetch.mockImplementation(() => ({
       fetchData: vi.fn(),
       data: {
@@ -79,16 +77,17 @@ describe('SignUpPage component', () => {
     const password = screen.getByLabelText('Password');
     const passwordConfirmation = screen.getByLabelText('Password Confirmation');
     const signUpButton = screen.getByRole('button', { name: /Sign Up/i });
-    const continueWithGitHub = screen.getByRole('button', { name: /Continue with GitHub/i });
 
-    await act(async () => {
-      await userEvent.type(firstName, 'mockFirstName');
-      await userEvent.type(lastName, 'mockLastName');
-      await userEvent.type(username, 'mockUsername');
-      await userEvent.type(email, 'mockEmail');
-      await userEvent.type(password, 'mockPassword');
-      await userEvent.type(passwordConfirmation, 'mockPasswordConfirmation');
-      await userEvent.click(signUpButton);
+    act(() => {
+      fireEvent.change(firstName, { target: { value: 'mockFirstName' } });
+      fireEvent.change(lastName, { target: { value: 'mockLastName' } });
+      fireEvent.change(username, { target: { value: 'mockUsername' } });
+      fireEvent.change(email, { target: { value: 'mockEmail' } });
+      fireEvent.change(password, { target: { value: 'mockPassword' } });
+      fireEvent.change(passwordConfirmation, {
+        target: { value: 'mockPassword' },
+      });
+      fireEvent.click(signUpButton);
     });
 
     expect(navigate).toHaveBeenCalledWith('/auth/signin');

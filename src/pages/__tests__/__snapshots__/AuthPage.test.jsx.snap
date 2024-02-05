@@ -1,0 +1,3 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AuthPage component > renders AuthPage component correctly 1`] = `undefined`;

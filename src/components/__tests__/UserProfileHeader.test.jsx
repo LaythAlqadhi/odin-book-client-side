@@ -6,9 +6,50 @@ import PropTypes from 'prop-types';
 import useFetch from '../../hooks/useFetch';
 import UserProfileHeader from '../UserProfileHeader';
 
+const mockCommentData = {
+  id: 'mockId',
+  author: {
+    id: 'mockId',
+    username: 'mockUsername',
+    profile: {
+      avatar: 'mockAvatar.jpg',
+    },
+  },
+  likes: 100,
+  content: 'mockContent',
+};
+
+const mockPostData = {
+  id: 'mockId',
+  author: {
+    id: 'mockId',
+    username: 'mockUsername',
+    profile: {
+      avatar: 'mockAvatar.jpg',
+    },
+  },
+  likes: 100,
+  content: 'mockContent',
+  comments: [mockCommentData],
+  createdAt: Date.now(),
+};
+
+const mockUserData = {
+  id: 'mockId',
+  username: 'mockUsername',
+  profile: {
+    displayName: 'mockDisplayName',
+    avatar: 'mockAvatar.jpg',
+    bio: 'mockBio',
+  },
+  followers: [],
+  following: [],
+  followingRequests: [],
+  posts: [mockPostData],
+};
+
 beforeAll(() => {
   vi.mock('../../hooks/useFetch');
-  
 });
 
 afterAll(() => {
@@ -17,10 +58,7 @@ afterAll(() => {
 
 function MockUserProfileHeader({ userId, token, me }) {
   return (
-    <Router
-      inititalEntries={[`/profile/${mockUserData.id}`]}
-      initialIndex={0}
-    >
+    <Router inititalEntries={[`/profile/${mockUserData.id}`]} initialIndex={0}>
       <UserProfileHeader userId={userId} token={token} me={me} />
     </Router>
   );

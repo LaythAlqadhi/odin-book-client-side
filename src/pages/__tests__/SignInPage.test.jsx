@@ -1,6 +1,5 @@
 import React from 'react';
-import { render, screen, act } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { vi } from 'vitest';
 import SignInPage from '../SignInPage';
@@ -14,7 +13,7 @@ beforeAll(() => {
     ...(await vi.importActual('../../contexts/AuthContext')),
     useAuth: () => ({
       payload: null,
-      signIn: signIn,
+      signIn,
       signUp: vi.fn(),
     }),
   }));
@@ -31,7 +30,6 @@ function MockSignInPage() {
     </Router>
   );
 }
-
 
 describe('SignInPage component', () => {
   it('should render loading when the data still not resolved', () => {
