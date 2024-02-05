@@ -40,7 +40,7 @@ describe('SignInPage component', () => {
 
     render(<MockSignInPage />);
 
-    const divElement = screen.getByText(/Loading/i);
+    const divElement = screen.getByTestId(/loading/i);
 
     expect(divElement).toBeInTheDocument();
   });

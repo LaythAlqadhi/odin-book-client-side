@@ -40,7 +40,7 @@ describe('SignUpPage component', () => {
     
     render(<MockSignUpPage />);
 
-    const divElement = screen.getByText(/Loading/i);
+    const divElement = screen.getByTestId(/loading/i);
 
     expect(divElement).toBeInTheDocument();
   });
