@@ -33,10 +33,8 @@ function AuthProvider({ children }) {
       expiry: expirationTime,
     };
 
-    Promise.resolve().then(() => {
-      setPayload(newPayload);
-      localStorage.setItem('payload', JSON.stringify(payloadWithExpiry));
-    });
+    setPayload(newPayload);
+    localStorage.setItem('payload', JSON.stringify(payloadWithExpiry));
   };
 
   const signOut = () => {

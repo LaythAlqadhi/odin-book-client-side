@@ -27,8 +27,10 @@ function SignInPage() {
   if (loading) return <LoadingSpinner />;
 
   if (data) {
-    signIn(data.payload);
-    navigate('/');
+    Promise.resolve().then(() => {
+      signIn(data.payload);
+      navigate('/');
+    });
   }
 
   return (
