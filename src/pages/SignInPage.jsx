@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import useFetch from '../hooks/useFetch';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const API_URL = 'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1';
 
@@ -18,7 +19,7 @@ function SignInPage() {
 
   if (error) return <div>Something went wrong.</div>;
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <LoadingSpinner />;
 
   if (data) {
     signIn(data.payload);
@@ -26,7 +27,7 @@ function SignInPage() {
   } 
 
   return (
-    <div data-testid="sign-in-container">
+    <div>
       <form>
         <label htmlFor="username">Username</label>
         <input
