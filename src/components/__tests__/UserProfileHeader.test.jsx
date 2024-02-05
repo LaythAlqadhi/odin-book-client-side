@@ -6,48 +6,9 @@ import PropTypes from 'prop-types';
 import useFetch from '../../hooks/useFetch';
 import UserProfileHeader from '../UserProfileHeader';
 
-const mockCommentData = {
-  id: 'mockId',
-  author: {
-    username: 'mockUsername',
-    profile: {
-      avatar: 'mockAvatar.jpg',
-    },
-  },
-  likes: 100,
-  content: 'mockContent',
-};
-
-const mockPostData = {
-  id: 'mockId',
-  author: {
-    username: 'mockUsername',
-    profile: {
-      avatar: 'mockAvatar.jpg',
-    },
-  },
-  likes: 100,
-  content: 'mockContent',
-  comments: [mockCommentData],
-  createdAt: Date.now(),
-};
-
-const mockUserData = {
-  id: 'mockId',
-  username: 'mockUsername',
-  profile: {
-    displayName: 'mockDisplayName',
-    avatar: 'mockAvatar.jpg',
-    bio: 'mockBio',
-  },
-  followers: [],
-  following: [],
-  followingRequests: [],
-  posts: [mockPostData],
-};
-
 beforeAll(() => {
   vi.mock('../../hooks/useFetch');
+  
 });
 
 afterAll(() => {
@@ -57,7 +18,7 @@ afterAll(() => {
 function MockUserProfileHeader({ userId, token, me }) {
   return (
     <Router
-      inititalEntries={[`/profile/${mockUserData.username}`]}
+      inititalEntries={[`/profile/${mockUserData.id}`]}
       initialIndex={0}
     >
       <UserProfileHeader userId={userId} token={token} me={me} />
@@ -82,7 +43,7 @@ describe('UserProfileHeader component', () => {
 
     render(
       <MockUserProfileHeader
-        userId={mockUserData.username}
+        userId={mockUserData.id}
         token="mockToken"
         me={mockUserData}
       />,
@@ -103,7 +64,7 @@ describe('UserProfileHeader component', () => {
 
     render(
       <MockUserProfileHeader
-        userId={mockUserData.username}
+        userId={mockUserData.id}
         token="mockToken"
         me={mockUserData}
       />,
@@ -126,7 +87,7 @@ describe('UserProfileHeader component', () => {
 
     render(
       <MockUserProfileHeader
-        userId={mockUserData.username}
+        userId={mockUserData.id}
         token="mockToken"
         me={mockUserData}
       />,
@@ -149,7 +110,7 @@ describe('UserProfileHeader component', () => {
 
     render(
       <MockUserProfileHeader
-        userId={mockUserData.username}
+        userId={mockUserData.id}
         token="mockToken"
         me={mockUserData}
       />,
@@ -173,7 +134,7 @@ describe('UserProfileHeader component', () => {
 
     render(
       <MockUserProfileHeader
-        userId={mockUserData.username}
+        userId={mockUserData.id}
         token="mockToken"
         me={mockUserData}
       />,
@@ -197,7 +158,7 @@ describe('UserProfileHeader component', () => {
 
     render(
       <MockUserProfileHeader
-        userId={mockUserData.username}
+        userId={mockUserData.id}
         token="mockToken"
         me={mockUserData}
       />,
@@ -225,7 +186,7 @@ describe('UserProfileHeader component', () => {
 
     render(
       <MockUserProfileHeader
-        userId={mockUserData.username}
+        userId={mockUserData.id}
         token="mockToken"
         me={mockUserData}
       />,
@@ -253,7 +214,7 @@ describe('UserProfileHeader component', () => {
 
     render(
       <MockUserProfileHeader
-        userId={mockUserData.username}
+        userId={mockUserData.id}
         token="mockToken"
         me={mockUserData}
       />,
@@ -282,7 +243,7 @@ describe('UserProfileHeader component', () => {
 
     render(
       <MockUserProfileHeader
-        userId={mockUserData.username}
+        userId={mockUserData.id}
         token="mockToken"
         me={mockUserData}
       />,
@@ -307,7 +268,7 @@ describe('UserProfileHeader component', () => {
 
     render(
       <MockUserProfileHeader
-        userId={mockUserData.username}
+        userId={mockUserData.id}
         token="mockToken"
         me={mockUserData}
       />,
@@ -336,7 +297,7 @@ describe('UserProfileHeader component', () => {
 
     render(
       <MockUserProfileHeader
-        userId="mockUser2"
+        userId="mockId2"
         token="mockToken"
         me={mockUserData}
       />,

@@ -50,10 +50,10 @@ describe('VisitorProfileButtons component', () => {
     render(
       <VisitorProfileButtons
         token="mockToken"
-        me={{ username: 'mockUsername' }}
+        me={{ id: 'mockId' }}
         user={{
           username: 'mockUsername',
-          followers: ['mockUsername'],
+          followers: ['mockId'],
           followingRequests: [],
         }}
       />,
@@ -77,11 +77,11 @@ describe('VisitorProfileButtons component', () => {
     render(
       <VisitorProfileButtons
         token="mockToken"
-        me={{ username: 'mockUsername' }}
+        me={{ id: 'mockId' }}
         user={{
           username: 'mockUsername',
           followers: [],
-          followingRequests: ['mockUsername'],
+          followingRequests: ['mockId'],
         }}
       />,
     );
@@ -104,7 +104,7 @@ describe('VisitorProfileButtons component', () => {
     render(
       <VisitorProfileButtons
         token="mockToken"
-        me={{ username: 'mockUsername' }}
+        me={{ id: 'mockId' }}
         user={{
           username: 'mockUsername',
           followers: [],
@@ -136,11 +136,11 @@ describe('VisitorProfileButtons component', () => {
     render(
       <VisitorProfileButtons
         token="mockToken"
-        me={{ username: 'mockUsername' }}
+        me={{ id: 'mockId' }}
         user={{
           username: 'mockUsername',
           followers: [],
-          followingRequests: ['mockUsername'],
+          followingRequests: ['mockId'],
         }}
       />,
     );
@@ -168,10 +168,10 @@ describe('VisitorProfileButtons component', () => {
     render(
       <VisitorProfileButtons
         token="mockToken"
-        me={{ username: 'mockUsername' }}
+        me={{ id: 'mockId' }}
         user={{
           username: 'mockUsername',
-          followers: ['mockUsername'],
+          followers: ['mockId'],
           followingRequests: [],
         }}
       />,

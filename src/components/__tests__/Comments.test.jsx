@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router-dom';
 import Comments from '../Comments';
 
 const mockCommentData = {
@@ -14,10 +15,18 @@ const mockCommentData = {
   content: 'mockContent',
 };
 
+const MockComments = ({ comments }) => {
+  return (
+    <MemoryRouter>
+      <Comments comments={comments} />
+    </MemoryRouter>
+  );
+}
+
 describe('Comments component', () => {
   it('should render the container', () => {
     render(
-      <Comments
+      <MockComments
         comments={[mockCommentData, mockCommentData, mockCommentData]}
       />,
     );
@@ -28,7 +37,7 @@ describe('Comments component', () => {
   });
 
   it('should render "No comments yet" when no comments available', () => {
-    render(<Comments comments={[]} />);
+    render(<MockComments comments={[]} />);
 
     const spanElement = screen.getByText(/No comments yet/i);
 
@@ -51,7 +60,7 @@ describe('Comments component', () => {
 
   it('should render a button with a text like "View all 3 comments" when button is not clicked', () => {
     render(
-      <Comments
+      <MockComments
         comments={[mockCommentData, mockCommentData, mockCommentData]}
       />,
     );
@@ -65,7 +74,7 @@ describe('Comments component', () => {
 
   it('should render a button with a text "Hide comments" when button is clicked', async () => {
     render(
-      <Comments
+      <MockComments
         comments={[mockCommentData, mockCommentData, mockCommentData]}
       />,
     );
@@ -81,7 +90,7 @@ describe('Comments component', () => {
 
   it('should render comments when view all clicked', async () => {
     render(
-      <Comments
+      <MockComments
         comments={[mockCommentData, mockCommentData, mockCommentData]}
       />,
     );

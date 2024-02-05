@@ -9,6 +9,7 @@ import Posts from '../Posts';
 const mockCommentData = {
   id: 'mockId',
   author: {
+    id: 'mockId',
     username: 'mockUsername',
     profile: {
       avatar: 'mockAvatar.jpg',
@@ -21,6 +22,7 @@ const mockCommentData = {
 const mockPostData = {
   id: 'mockId',
   author: {
+    id: 'mockId',
     username: 'mockUsername',
     profile: {
       avatar: 'mockAvatar.jpg',

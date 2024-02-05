@@ -7,6 +7,7 @@ import Post from '../Post';
 
 const mockCommentData = {
   author: {
+    id: 'mockId',
     username: 'mockUsername',
     profile: {
       avatar: 'mockAvatar.jpg',
@@ -18,6 +19,7 @@ const mockCommentData = {
 
 const mockPostData = {
   author: {
+    id: 'mockId',
     username: 'mockUsername',
     profile: {
       avatar: 'mockAvatar.jpg',
@@ -70,7 +72,7 @@ describe('Post component', () => {
 
     expect(linkElement).toBeInTheDocument();
     expect(linkElement.href).toContain(
-      `profile/${mockPostData.author.username}`,
+      `profile/${mockPostData.author.id}`,
     );
   });
 

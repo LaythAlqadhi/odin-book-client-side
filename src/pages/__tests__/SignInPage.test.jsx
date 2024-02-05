@@ -4,59 +4,85 @@ import userEvent from '@testing-library/user-event';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { vi } from 'vitest';
 import SignInPage from '../SignInPage';
+import useFetch from '../../hooks/useFetch';
 
-beforeEach(() => {
-  global.fetch = vi.fn(() =>
-    Promise.resolve({
-      json: () => Promise.resolve({ token: 'mockToken' }),
-      status: 200,
-    }),
-  );
+const navigate = vi.fn()
+
+beforeAll(() => {
+  vi.mock('../../hooks/useFetch');
+  vi.mock('react-router-dom', async () => ({
+    ...(await vi.importActual('react-router-dom')),
+    useNavigate: () => navigate,
+  }));
 });
 
-afterEach(() => {
+afterAll(() => {
   vi.clearAllMocks();
 });
 
-describe('SignIn component', () => {
-  it('renders SignIn component correctly', async () => {
-    render(
-      <Router>
-        <SignInPage />
-      </Router>,
-    );
+function MockSignInPage() {
+  return (
+    <Router>
+      <SignInPage />
+    </Router>
+  );
+}
+
+
+describe('SignInPage component', () => {
+  it('should render loading when the data still not resolved', () => {
+    useFetch.mockImplementation(() => ({
+      fetchData: vi.fn(),
+      data: null,
+      loading: true,
+      error: false,
+    }));
+
+    render(<MockSignInPage />);
+
+    const divElement = screen.getByText(/Loading/i);
+
+    expect(divElement).toBeInTheDocument();
+  });
+
+  it('should render message "Something went wrong" when an error occurs', () => {
+    useFetch.mockImplementation(() => ({
+      fetchData: vi.fn(),
+      data: null,
+      loading: false,
+      error: true,
+    }));
+
+    render(<MockSignInPage />);
+
+    const divElement = screen.getByText(/Something went wrong/i);
+
+    expect(divElement).toBeInTheDocument();
+  });
+
+  it('should render navigate to home page when sign in button is clicked', async () => {
+    useFetch.mockImplementation(() => ({
+      fetchData: vi.fn(),
+      data: {
+        user: {},
+      },
+      loading: false,
+      error: false,
+    }));
+
+    render(<MockSignInPage />);
 
     const username = screen.getByLabelText('Username');
     const password = screen.getByLabelText('Password');
-    const submit = screen.getByText('Sign In');
-    const continueWithGitHub = screen.getByText('Continue with GitHub');
-
-    expect(username).toBeInTheDocument();
-    expect(password).toBeInTheDocument();
-    expect(submit).toBeInTheDocument();
-    expect(continueWithGitHub).toBeInTheDocument();
-
-    expect(fetch).not.toHaveBeenCalled();
+    const signInButton = screen.getByRole('button', { name: /Sign In/i });
+    const continueWithGitHub = screen.getByRole('button', { name: /Continue with GitHub/i });
 
     await act(async () => {
       await userEvent.type(username, 'mockUsername');
       await userEvent.type(password, 'mockPassword');
-      await userEvent.click(submit);
+      await userEvent.click(signInButton);
     });
 
-    expect(fetch).toHaveBeenCalledWith(
-      'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1/auth/signin',
-      {
-        mode: 'cors',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: 'mockUsername',
-          password: 'mockPassword',
-        }),
-      },
-    );
+    expect(navigate).toHaveBeenCalledWith('/');
   });
 });

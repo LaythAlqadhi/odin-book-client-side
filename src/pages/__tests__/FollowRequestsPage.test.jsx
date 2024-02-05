@@ -41,6 +41,7 @@ const mockUserData = {
   },
   followers: [],
   following: [],
+  followingRequests: [],
   posts: [mockPostData],
 };
 
@@ -115,7 +116,9 @@ describe('FollowRequestsPage component', () => {
     useFetch.mockImplementation(() => ({
       fetchData: vi.fn(),
       data: {
-        users: [mockUserData],
+        user: {
+          followingRequests: [mockUserData],
+        },
       },
       loading: false,
       error: null,
@@ -132,7 +135,9 @@ describe('FollowRequestsPage component', () => {
     useFetch.mockImplementation(() => ({
       fetchData: vi.fn(),
       data: {
-        users: [mockUserData],
+        user: {
+          followingRequests: [mockUserData],
+        },
       },
       loading: false,
       error: null,
@@ -150,7 +155,9 @@ describe('FollowRequestsPage component', () => {
     useFetch.mockImplementation(() => ({
       fetchData: vi.fn(),
       data: {
-        users: [mockUserData],
+        user: {
+          followingRequests: [mockUserData],
+        },
       },
       loading: false,
       error: null,
@@ -167,7 +174,9 @@ describe('FollowRequestsPage component', () => {
     useFetch.mockImplementation(() => ({
       fetchData: vi.fn(),
       data: {
-        users: [mockUserData],
+        user: {
+          followingRequests: [mockUserData],
+        },
       },
       loading: false,
       error: null,
@@ -186,7 +195,9 @@ describe('FollowRequestsPage component', () => {
     useFetch.mockImplementation(() => ({
       fetchData: vi.fn(),
       data: {
-        users: [mockUserData],
+        user: {
+          followingRequests: [mockUserData],
+        },
       },
       loading: false,
       error: null,
@@ -207,7 +218,9 @@ describe('FollowRequestsPage component', () => {
     useFetch.mockImplementation(() => ({
       fetchData: vi.fn(),
       data: {
-        users: [mockUserData, mockUserData, mockUserData],
+        user: {
+          followingRequests: [mockUserData, mockUserData, mockUserData],
+        },
       },
       loading: false,
       error: null,

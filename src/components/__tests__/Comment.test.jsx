@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import Comment from '../Comment';
 
 const mockCommentData = {
@@ -13,9 +14,17 @@ const mockCommentData = {
   content: 'mockContent',
 };
 
+const MockComment = ({ comment }) => {
+  return (
+    <MemoryRouter>
+      <Comment comment={comment} />
+    </MemoryRouter>
+  );
+}
+
 describe('Comment component', () => {
   it('should render the container correctly', () => {
-    render(<Comment comment={mockCommentData} />);
+    render(<MockComment comment={mockCommentData} />);
 
     const divElement = screen.getByTestId(/comment-container/i);
 
@@ -23,7 +32,7 @@ describe('Comment component', () => {
   });
 
   it('should render an avatar correctly', () => {
-    render(<Comment comment={mockCommentData} />);
+    render(<MockComment comment={mockCommentData} />);
 
     const imgElement = screen.getByAltText(/Avatar/i);
 
@@ -32,7 +41,7 @@ describe('Comment component', () => {
   });
 
   it('should render the username correctly', () => {
-    render(<Comment comment={mockCommentData} />);
+    render(<MockComment comment={mockCommentData} />);
 
     const usernameElement = screen.getByText(mockCommentData.author.username);
 
@@ -40,7 +49,7 @@ describe('Comment component', () => {
   });
 
   it('should render the content text correctly', () => {
-    render(<Comment comment={mockCommentData} />);
+    render(<MockComment comment={mockCommentData} />);
 
     const contentElement = screen.getByText(mockCommentData.content);
 
@@ -48,7 +57,7 @@ describe('Comment component', () => {
   });
 
   it('should render the likes correctly', () => {
-    render(<Comment comment={mockCommentData} />);
+    render(<MockComment comment={mockCommentData} />);
 
     const likesElement = screen.getByText(mockCommentData.likes);
 
