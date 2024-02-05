@@ -21,9 +21,9 @@ beforeAll(() => {
           },
         },
       },
+      signIn: vi.fn(),
+      signUp: vi.fn(),
     }),
-    signIn: vi.fn(),
-    signUp: vi.fn(),
   }));
 
   vi.mock('../../components/UserProfileHeader', () => ({
