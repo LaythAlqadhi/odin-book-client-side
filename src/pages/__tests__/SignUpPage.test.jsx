@@ -60,7 +60,7 @@ describe('SignUpPage component', () => {
     expect(divElement).toBeInTheDocument();
   });
 
-  it('should render navigate to sign in page when sign up button is clicked', async () => {
+  it('should navigate to sign in page when sign up button is clicked', async () => {
     useFetch.mockImplementation(() => ({
       fetchData: vi.fn(),
       data: {

@@ -6,13 +6,17 @@ import { vi } from 'vitest';
 import SignInPage from '../SignInPage';
 import useFetch from '../../hooks/useFetch';
 
-const navigate = vi.fn()
+const signIn = vi.fn();
 
 beforeAll(() => {
   vi.mock('../../hooks/useFetch');
-  vi.mock('react-router-dom', async () => ({
-    ...(await vi.importActual('react-router-dom')),
-    useNavigate: () => navigate,
+  vi.mock('../../contexts/AuthContext', async () => ({
+    ...(await vi.importActual('../../contexts/AuthContext')),
+    useAuth: () => ({
+      payload: null,
+      signIn: signIn,
+      signUp: vi.fn(),
+    }),
   }));
 });
 
@@ -60,11 +64,13 @@ describe('SignInPage component', () => {
     expect(divElement).toBeInTheDocument();
   });
 
-  it('should render navigate to home page when sign in button is clicked', async () => {
+  it('should execute signIn function when user signed in successfully', () => {
     useFetch.mockImplementation(() => ({
       fetchData: vi.fn(),
       data: {
-        user: {},
+        payload: {
+          token: 'mockToken',
+        },
       },
       loading: false,
       error: false,
@@ -72,17 +78,6 @@ describe('SignInPage component', () => {
 
     render(<MockSignInPage />);
 
-    const username = screen.getByLabelText('Username');
-    const password = screen.getByLabelText('Password');
-    const signInButton = screen.getByRole('button', { name: /Sign In/i });
-    const continueWithGitHub = screen.getByRole('button', { name: /Continue with GitHub/i });
-
-    await act(async () => {
-      await userEvent.type(username, 'mockUsername');
-      await userEvent.type(password, 'mockPassword');
-      await userEvent.click(signInButton);
-    });
-
-    expect(navigate).toHaveBeenCalledWith('/');
+    expect(signIn).toHaveBeenCalledWith({ token: 'mockToken' });
   });
 });
