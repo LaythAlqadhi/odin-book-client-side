@@ -10,7 +10,7 @@ function Posts({ token, userId }) {
   const { fetchData, data, loading, error } = useFetch();
 
   useEffect(() => {
-      fetchData(`${API_URL}/posts/${userId ? userId : ''}`, token);
+    fetchData(`${API_URL}/posts/${userId || ''}`, token);
   }, [API_URL, userId, token]);
 
   if (loading) return <div>Loading...</div>;

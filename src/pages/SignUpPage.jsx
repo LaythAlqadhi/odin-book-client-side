@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-const API_URL = 'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1';
+const API_URL =
+  'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1';
 
 function SignUpPage() {
   const navigate = useNavigate();
@@ -16,6 +17,10 @@ function SignUpPage() {
     password: '',
     passwordConfirmation: '',
   });
+
+  const handleContinueWithGitHub = () => {
+    window.location.href = `${API_URL}/auth/github`;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -94,7 +99,7 @@ function SignUpPage() {
           Sign Up
         </button>
       </form>
-      <button type="button" onClick={() => window.location.href = `${API_URL}/auth/github`}>
+      <button type="button" onClick={handleContinueWithGitHub}>
         Continue with GitHub
       </button>
       <button type="button" onClick={() => navigate('/auth/signin')}>

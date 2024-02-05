@@ -4,13 +4,18 @@ import { useAuth } from '../contexts/AuthContext';
 import useFetch from '../hooks/useFetch';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-const API_URL = 'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1';
+const API_URL =
+  'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1';
 
 function SignInPage() {
   const navigate = useNavigate();
   const { signIn } = useAuth();
   const { fetchData, data, loading, error } = useFetch();
   const [inputs, setInputs] = useState({ username: '', password: '' });
+
+  const handleContinueWithGitHub = () => {
+    window.location.href = `${API_URL}/auth/github`;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,7 +29,7 @@ function SignInPage() {
   if (data) {
     signIn(data.payload);
     navigate('/');
-  } 
+  }
 
   return (
     <div>
@@ -51,7 +56,7 @@ function SignInPage() {
           Sign In
         </button>
       </form>
-      <button type="button" onClick={() => window.location.href = `${API_URL}/auth/github`}>
+      <button type="button" onClick={handleContinueWithGitHub}>
         Continue with GitHub
       </button>
       or

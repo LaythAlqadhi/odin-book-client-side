@@ -71,9 +71,7 @@ describe('Post component', () => {
     });
 
     expect(linkElement).toBeInTheDocument();
-    expect(linkElement.href).toContain(
-      `profile/${mockPostData.author.id}`,
-    );
+    expect(linkElement.href).toContain(`profile/${mockPostData.author.id}`);
   });
 
   it('should render like button correctly', () => {

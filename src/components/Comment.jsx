@@ -9,7 +9,9 @@ function Comment({ comment }) {
         <img src={comment.author.profile.avatar} alt="Avatar" />
       </Link>
       <div>
-        <Link to={`/profile/${comment.author.id}`}>{comment.author.username}</Link>
+        <Link to={`/profile/${comment.author.id}`}>
+          {comment.author.username}
+        </Link>
         <p>{comment.content}</p>
       </div>
       <div>

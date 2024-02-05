@@ -10,9 +10,7 @@ function Post({ post }) {
         <Link to={`/profile/${post.author.id}`}>
           <img src={post.author.profile.avatar} alt="Avatar" />
         </Link>
-        <Link to={`/profile/${post.author.id}`}>
-          {post.author.username}
-        </Link>
+        <Link to={`/profile/${post.author.id}`}>{post.author.username}</Link>
       </div>
       <figure>No figure</figure>
       <div>
