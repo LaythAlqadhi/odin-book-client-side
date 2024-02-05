@@ -1,14 +1,11 @@
 import React from 'react';
 import { Outlet, useOutlet, useNavigate } from 'react-router-dom';
 
+const API_URL = 'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1';
+
 function AuthPage() {
   const hasOutlet = useOutlet();
   const navigate = useNavigate();
-
-  const handleContinueWithGitHub = () => {
-    window.location.href =
-      'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1/auth/github';
-  };
 
   return (
     <div>
@@ -22,7 +19,7 @@ function AuthPage() {
           <button type="button" onClick={() => navigate('/auth/signin')}>
             Sign In
           </button>
-          <button type="button" onClick={handleContinueWithGitHub}>
+          <button type="button" onClick={() => window.location.href = `${API_URL}/auth/github`}>
             Continue with GitHub
           </button>
         </>
