@@ -12,7 +12,9 @@ function Post({ post }) {
         </Link>
         <Link to={`/profile/${post.author.id}`}>{post.author.username}</Link>
       </div>
-      <figure>No figure</figure>
+      {post.content.media && (
+        <img src={post.content.media} alt="" />
+      )}
       <div>
         <button type="button" aria-label="Like">
           Like
@@ -25,11 +27,13 @@ function Post({ post }) {
         </button>
       </div>
       <div aria-label="The number of likes">{post.likes}</div>
+      {post.content.text && (
       <div>
         <p>
-          {post.author.username} {post.content}
+          {post.author.username} {post.content.text}
         </p>
       </div>
+      )}
       <div>
         <span aria-label="Date">{post.createdAt}</span>
       </div>
