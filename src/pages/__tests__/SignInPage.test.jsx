@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { vi } from 'vitest';
 import SignInPage from '../SignInPage';
@@ -76,6 +76,8 @@ describe('SignInPage component', () => {
 
     render(<MockSignInPage />);
 
-    expect(signIn).toHaveBeenCalledWith({ token: 'mockToken' });
+    waitFor(async () => {
+      await expect(signIn).toHaveBeenCalledWith({ token: 'mockToken' });
+    });
   });
 });

@@ -8,6 +8,7 @@ import useFetch from '../../hooks/useFetch';
 const navigate = vi.fn();
 
 beforeAll(() => {
+  vi.mock('../../utils/validateInput');
   vi.mock('../../hooks/useFetch');
   vi.mock('react-router-dom', async () => ({
     ...(await vi.importActual('react-router-dom')),
@@ -70,24 +71,22 @@ describe('SignUpPage component', () => {
 
     render(<MockSignUpPage />);
 
-    const firstName = screen.getByLabelText('First Name');
-    const lastName = screen.getByLabelText('Last Name');
+    const name = screen.getByLabelText('Name');
     const username = screen.getByLabelText('Username');
     const email = screen.getByLabelText('Email Address');
     const password = screen.getByLabelText('Password');
     const passwordConfirmation = screen.getByLabelText('Password Confirmation');
-    const signUpButton = screen.getByRole('button', { name: /Sign Up/i });
+    const submitButton = screen.getByRole('button', { name: /Submit/i });
 
     act(() => {
-      fireEvent.change(firstName, { target: { value: 'mockFirstName' } });
-      fireEvent.change(lastName, { target: { value: 'mockLastName' } });
+      fireEvent.change(name, { target: { value: 'mockName' } });
       fireEvent.change(username, { target: { value: 'mockUsername' } });
       fireEvent.change(email, { target: { value: 'mockEmail' } });
       fireEvent.change(password, { target: { value: 'mockPassword' } });
       fireEvent.change(passwordConfirmation, {
         target: { value: 'mockPassword' },
       });
-      fireEvent.click(signUpButton);
+      fireEvent.click(submitButton);
     });
 
     expect(navigate).toHaveBeenCalledWith('/auth/signin');
