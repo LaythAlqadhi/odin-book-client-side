@@ -17,7 +17,7 @@ function ProfilePage() {
           me={payload.user}
         />
       </div>
-      <div>
+      <div className="flex justify-center">
         <Posts userId={userId} token={payload.token} />
       </div>
     </div>
