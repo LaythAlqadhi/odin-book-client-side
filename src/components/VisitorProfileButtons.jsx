@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import useFetch from '../hooks/useFetch';
+import { API_URL } from '../constants';
 
-const API_URL =
-  'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1';
-
-function VisitorProfileButtons({ token, me, user }) {
+function VisitorProfileButtons({ token, me, user, single }) {
   const [isFollowing, setIsFollowing] = useState(
     user.followers.includes(me.id),
   );
@@ -19,7 +17,7 @@ function VisitorProfileButtons({ token, me, user }) {
 
   const handleRequestFollow = () => {
     fetchRequestFollow(
-      `${API_URL}/user/${user.id}/follow-request`,
+      `${API_URL}/users/${user.id}/follow-request`,
       token,
       'POST',
     );
@@ -28,7 +26,7 @@ function VisitorProfileButtons({ token, me, user }) {
 
   const handleUnfollow = () => {
     fetchRemoveFollow(
-      `${API_URL}/user/${user.id}/following/${me.id}`,
+      `${API_URL}/users/${user.id}/following/${me.id}`,
       token,
       'DELETE',
     );
@@ -37,7 +35,7 @@ function VisitorProfileButtons({ token, me, user }) {
 
   const handleRemoveRequest = () => {
     fetchRemoveRequest(
-      `${API_URL}/user/${user.id}/follow-request`,
+      `${API_URL}/users/${user.id}/follow-request`,
       token,
       'DELETE',
     );
@@ -45,31 +43,52 @@ function VisitorProfileButtons({ token, me, user }) {
   };
 
   return (
-    <div>
+    <div className="flex gap-4">
       {isFollowing && (
-        <button type="button" onClick={handleUnfollow}>
+        <button
+          className="button w-full min-w-fit"
+          type="button"
+          onClick={handleUnfollow}
+        >
           Following
         </button>
       )}
       {!isFollowing && isRequested && (
-        <button type="button" onClick={handleRemoveRequest}>
+        <button
+          className="button w-full min-w-fit"
+          type="button"
+          onClick={handleRemoveRequest}
+        >
           Requested
         </button>
       )}
       {!isFollowing && !isRequested && (
-        <button type="button" onClick={handleRequestFollow}>
+        <button
+          className="button w-full min-w-fit !bg-sky-500 !text-white hover:!bg-sky-600"
+          type="button"
+          onClick={handleRequestFollow}
+        >
           Follow
         </button>
       )}
-      <button type="button">Message</button>
+      {!single && (
+        <button className="button w-full min-w-fit" type="button">
+          Message
+        </button>
+      )}
     </div>
   );
 }
+
+VisitorProfileButtons.defaultProps = {
+  single: false,
+};
 
 VisitorProfileButtons.propTypes = {
   token: PropTypes.string.isRequired,
   me: PropTypes.instanceOf(Object).isRequired,
   user: PropTypes.instanceOf(Object).isRequired,
+  single: PropTypes.bool,
 };
 
 export default VisitorProfileButtons;
