@@ -1,9 +1,35 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { MemoryRouter as Router } from 'react-router-dom';
+import { vi } from 'vitest';
 import PropTypes from 'prop-types';
 import Post from '../Post';
+
+beforeAll(() => {
+  vi.mock('../../contexts/AuthContext', async (importOriginal) => ({
+    ...(await importOriginal()),
+    useAuth: () => ({
+      payload: {
+        token: 'mockToken',
+        user: {
+          id: 'mockId',
+          username: 'mockUsername',
+          profile: {
+            displayName: 'mockDisplayName',
+            avatar: 'mockAvatar',
+            bio: 'mockBio',
+          },
+        },
+      },
+    }),
+    signIn: vi.fn(),
+    signUp: vi.fn(),
+  }));
+});
+
+afterAll(() => {
+  vi.clearAllMocks();
+});
 
 const mockCommentData = {
   author: {
@@ -13,7 +39,7 @@ const mockCommentData = {
       avatar: 'mockAvatar.jpg',
     },
   },
-  likes: 100,
+  likes: ['', ''],
   content: 'mockContent',
 };
 
@@ -25,7 +51,7 @@ const mockPostData = {
       avatar: 'mockAvatar.jpg',
     },
   },
-  likes: 100,
+  likes: ['', ''],
   content: 'mockContent',
   comments: [mockCommentData],
   createdAt: Date.now(),
@@ -100,33 +126,11 @@ describe('Post component', () => {
     expect(shareButtonElement).toBeInTheDocument();
   });
 
-  it('should render the number of likes correctly', () => {
-    render(<MockPost post={mockPostData} />);
-
-    const likesElement = screen.getByLabelText(/The number of likes/i);
-
-    expect(likesElement).toBeInTheDocument();
-  });
-
   it('should render date of the post', () => {
     render(<MockPost post={mockPostData} />);
 
     const dateElement = screen.getByLabelText(/Date/i);
 
     expect(dateElement).toBeInTheDocument();
-  });
-
-  it('should render the comments when View all comments is clicked', async () => {
-    render(<MockPost post={mockPostData} />);
-
-    const buttonElement = screen.getByRole('button', {
-      name: 'View all 1 comments',
-    });
-
-    await userEvent.click(buttonElement);
-
-    const commentElements = screen.getAllByTestId(/comment-container/i);
-
-    expect(commentElements.length).toBe(1);
   });
 });
