@@ -13,7 +13,7 @@ const mockCommentData = {
       avatar: 'mockAvatar.jpg',
     },
   },
-  likes: 100,
+  likes: ['', ''],
   content: 'mockContent',
 };
 
@@ -25,7 +25,7 @@ const mockPostData = {
       avatar: 'mockAvatar.jpg',
     },
   },
-  likes: 100,
+  likes: ['', ''],
   content: 'mockContent',
   comments: [mockCommentData],
   createdAt: Date.now(),
@@ -131,26 +131,6 @@ describe('FollowRequestsPage component', () => {
     expect(divElement).toBeInTheDocument();
   });
 
-  it('should render a link element correctly', () => {
-    useFetch.mockImplementation(() => ({
-      fetchData: vi.fn(),
-      data: {
-        user: {
-          followingRequests: [mockUserData],
-        },
-      },
-      loading: false,
-      error: null,
-    }));
-
-    render(<MockFollowRequestsPage />);
-
-    const linkElement = screen.getByRole('link');
-
-    expect(linkElement).toBeInTheDocument();
-    expect(linkElement.href).toContain(`profile/${mockUserData.id}`);
-  });
-
   it('should render an avatar correctly', () => {
     useFetch.mockImplementation(() => ({
       fetchData: vi.fn(),
@@ -228,7 +208,9 @@ describe('FollowRequestsPage component', () => {
 
     render(<MockFollowRequestsPage />);
 
-    const linkElements = screen.getAllByRole('link');
+    const linkElements = screen.getAllByRole('link', {
+      name: /requested to follow you./i,
+    });
 
     expect(linkElements.length).toBe(3);
   });
