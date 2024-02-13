@@ -15,7 +15,7 @@ const mockCommentData = {
       avatar: 'mockAvatar.jpg',
     },
   },
-  likes: 100,
+  likes: ['mockId', 'mockId2'],
   content: 'mockContent',
 };
 
@@ -28,7 +28,7 @@ const mockPostData = {
       avatar: 'mockAvatar.jpg',
     },
   },
-  likes: 100,
+  likes: ['mockId', 'mockId2'],
   content: 'mockContent',
   comments: [mockCommentData],
   createdAt: Date.now(),
@@ -36,6 +36,26 @@ const mockPostData = {
 
 beforeAll(() => {
   vi.mock('../../hooks/useFetch');
+
+  vi.mock('../../contexts/AuthContext', async (importOriginal) => ({
+    ...(await importOriginal()),
+    useAuth: () => ({
+      payload: {
+        token: 'mockToken',
+        user: {
+          id: 'mockId',
+          username: 'mockUsername',
+          profile: {
+            displayName: 'mockDisplayName',
+            avatar: 'mockAvatar',
+            bio: 'mockBio',
+          },
+        },
+      },
+    }),
+    signIn: vi.fn(),
+    signUp: vi.fn(),
+  }));
 });
 
 afterAll(() => {
@@ -104,7 +124,7 @@ describe('Posts component', () => {
       <MockPosts userId={mockPostData.author.username} token="mockToken" />,
     );
 
-    const usernameElement = screen.getByText(/mockContent/i);
+    const usernameElement = screen.getByText(mockPostData.author.username);
 
     expect(usernameElement).toBeInTheDocument();
   });
