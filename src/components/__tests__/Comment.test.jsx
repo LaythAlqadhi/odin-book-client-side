@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { vi } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Comment from '../Comment';
@@ -11,9 +12,44 @@ const mockCommentData = {
       avatar: 'mockAvatar.jpg',
     },
   },
-  likes: 100,
+  likes: ['', ''],
   content: 'mockContent',
 };
+
+beforeAll(() => {
+  vi.mock('../../hooks/useFetch', () => ({
+    default: vi.fn(() => ({
+      fetchData: vi.fn(),
+      data: null,
+      loading: true,
+      error: null,
+    })),
+  }));
+
+  vi.mock('../../contexts/AuthContext', async (importOriginal) => ({
+    ...(await importOriginal()),
+    useAuth: () => ({
+      payload: {
+        token: 'mockToken',
+        user: {
+          id: 'mockId',
+          username: 'mockUsername',
+          profile: {
+            displayName: 'mockDisplayName',
+            avatar: 'mockAvatar',
+            bio: 'mockBio',
+          },
+        },
+      },
+    }),
+    signIn: vi.fn(),
+    signUp: vi.fn(),
+  }));
+});
+
+afterAll(() => {
+  vi.clearAllMocks();
+});
 
 function MockComment({ comment }) {
   return (
@@ -64,7 +100,7 @@ describe('Comment component', () => {
   it('should render the likes correctly', () => {
     render(<MockComment comment={mockCommentData} />);
 
-    const likesElement = screen.getByText(mockCommentData.likes);
+    const likesElement = screen.getByText(mockCommentData.likes.length);
 
     expect(likesElement).toBeInTheDocument();
   });

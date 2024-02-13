@@ -1,38 +1,107 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 import { MemoryRouter as Router } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Comments from '../Comments';
 
+const mockUseFetch = {
+  fetchData: vi.fn(),
+  data: null,
+  loading: true,
+  error: null,
+};
+
+beforeAll(() => {
+  vi.mock('../../hooks/useFetch', () => ({
+    default: vi.fn(() => mockUseFetch),
+  }));
+
+  vi.mock('../../contexts/AuthContext', async (importOriginal) => ({
+    ...(await importOriginal()),
+    useAuth: () => ({
+      payload: {
+        token: 'mockToken',
+        user: {
+          id: 'mockId',
+          username: 'mockUsername',
+          profile: {
+            displayName: 'mockDisplayName',
+            avatar: 'mockAvatar',
+            bio: 'mockBio',
+          },
+        },
+      },
+    }),
+    signIn: vi.fn(),
+    signUp: vi.fn(),
+  }));
+});
+
+afterAll(() => {
+  vi.clearAllMocks();
+});
+
 const mockCommentData = {
+  id: 'mockId',
   author: {
+    id: 'mockId',
     username: 'mockUsername',
     profile: {
+      displayName: 'mockDisplayName',
       avatar: 'mockAvatar.jpg',
     },
   },
-  likes: 100,
+  likes: ['', ''],
   content: 'mockContent',
 };
 
-function MockComments({ comments }) {
+const mockPostData = {
+  id: 'mockId',
+  author: {
+    id: 'mockId',
+    username: 'mockUsername',
+    profile: {
+      displayName: 'mockDisplayName',
+      avatar: 'mockAvatar.jpg',
+    },
+  },
+  comments: [mockCommentData],
+  likes: ['', ''],
+  content: {
+    media: 'mockMedia.jpg',
+    text: 'mockText',
+  },
+};
+
+function MockComments({ commentsRef, areCommentsOpened, postId }) {
   return (
     <Router>
-      <Comments comments={comments} />
+      <Comments
+        commentsRef={commentsRef}
+        areCommentsOpened={areCommentsOpened}
+        postId={postId}
+      />
     </Router>
   );
 }
 
 MockComments.propTypes = {
-  comments: PropTypes.instanceOf(Object).isRequired,
+  commentsRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  ]).isRequired,
+  areCommentsOpened: PropTypes.bool.isRequired,
+  postId: PropTypes.string.isRequired,
 };
 
 describe('Comments component', () => {
   it('should render the container', () => {
     render(
       <MockComments
-        comments={[mockCommentData, mockCommentData, mockCommentData]}
+        commentsRef={vi.fn()}
+        areCommentsOpened
+        postId={mockPostData.id}
       />,
     );
 
@@ -41,73 +110,50 @@ describe('Comments component', () => {
     expect(containerElement).toBeInTheDocument();
   });
 
-  it('should render "No comments yet" when no comments available', () => {
-    render(<MockComments comments={[]} />);
-
-    const spanElement = screen.getByText(/No comments yet/i);
-
-    expect(spanElement).toBeInTheDocument();
-  });
-
-  it('should render a button when comments are available', () => {
-    render(
-      <Comments
-        comments={[mockCommentData, mockCommentData, mockCommentData]}
-      />,
-    );
-
-    const buttonElement = screen.getByRole('button', {
-      name: 'View all 3 comments',
-    });
-
-    expect(buttonElement).toBeInTheDocument();
-  });
-
-  it('should render a button with a text like "View all 3 comments" when button is not clicked', () => {
+  it('should render comment input correctly', () => {
     render(
       <MockComments
-        comments={[mockCommentData, mockCommentData, mockCommentData]}
+        commentsRef={vi.fn()}
+        areCommentsOpened
+        postId={mockPostData.id}
       />,
     );
 
-    const buttonElement = screen.getByRole('button', {
-      name: 'View all 3 comments',
-    });
+    const inputElement = screen.getByLabelText(/Write a comment/i);
 
-    expect(buttonElement).toBeInTheDocument();
+    expect(inputElement).toBeInTheDocument();
   });
 
-  it('should render a button with a text "Hide comments" when button is clicked', async () => {
+  it('should render "Loading..." when loading state is true', async () => {
     render(
       <MockComments
-        comments={[mockCommentData, mockCommentData, mockCommentData]}
+        commentsRef={vi.fn()}
+        areCommentsOpened
+        postId={mockPostData.id}
       />,
     );
 
-    const buttonElement = screen.getByRole('button', {
-      name: 'View all 3 comments',
-    });
+    const loadingElement = screen.getByText(/Loading/i);
 
-    await userEvent.click(buttonElement);
-
-    expect(buttonElement.textContent).toBe('Hide comments');
+    expect(loadingElement).toBeInTheDocument();
   });
 
-  it('should render comments when view all clicked', async () => {
+  it('should render comments correctly', async () => {
+    mockUseFetch.loading = false;
+    mockUseFetch.data = {
+      comments: [mockCommentData],
+    };
+
     render(
       <MockComments
-        comments={[mockCommentData, mockCommentData, mockCommentData]}
+        commentsRef={vi.fn()}
+        areCommentsOpened
+        postId={mockPostData.id}
       />,
     );
 
-    const buttonElement = screen.getByRole('button', {
-      name: 'View all 3 comments',
-    });
+    const commentElement = screen.getByText(mockCommentData.content);
 
-    await userEvent.click(buttonElement);
-
-    const commentElements = screen.getAllByTestId(/comment-container/i);
-
-    expect(commentElements.length).toBe(3);
+    expect(commentElement).toBeInTheDocument();
   });
 });
