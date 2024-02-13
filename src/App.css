@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  @apply focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500;
+}
+
+html {
+  overscroll-behavior: none;
+}
+
+.input {
+  @apply px-3 py-2 bg-white border rounded-md text-base placeholder-slate-400 invalid:focus:border-pink-500 invalid:focus:ring-pink-500 invalid:text-pink-600 invalid:[&:not(:placeholder-shown):not(:focus)]:border-pink-500 invalid:[&:not(:placeholder-shown):not(:focus)]:text-pink-600;
+}
+
+.button {
+  @apply px-3 py-2 bg-white active:bg-slate-200 border rounded-md text-base cursor-pointer;
+}
