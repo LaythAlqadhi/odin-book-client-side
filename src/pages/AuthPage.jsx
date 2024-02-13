@@ -1,33 +1,84 @@
 import React from 'react';
 import { Outlet, useOutlet, useNavigate } from 'react-router-dom';
-
-const API_URL =
-  'https://b32a7bae-6556-4da3-a848-f0e0b80bf4f0-00-36mr5e3zsor9c.janeway.replit.dev/v1';
+import { useAuth } from '../contexts/AuthContext';
+import useFetch from '../hooks/useFetch';
+import LoadingSpinner from '../components/LoadingSpinner';
+import { API_URL } from '../constants';
 
 function AuthPage() {
   const hasOutlet = useOutlet();
   const navigate = useNavigate();
+  const { signIn } = useAuth();
+  const { fetchData, data, loading, error } = useFetch();
 
   const handleContinueWithGitHub = () => {
     window.location.href = `${API_URL}/auth/github`;
   };
 
+  const handleSubmitWithDemoAccount = () => {
+    fetchData(`${API_URL}/auth/demo`);
+  };
+
+  
+  if (error) return <div>Something went wrong.</div>;
+
+  if (loading) return <LoadingSpinner />;
+
+
+  if (data?.payload) {
+    Promise.resolve().then(() => {
+      signIn(data.payload);
+      navigate('/');
+    });
+  }
+
   return (
-    <div>
+    <div className="flex h-full flex-col items-center justify-center">
       {hasOutlet ? (
         <Outlet />
       ) : (
-        <>
-          <button type="button" onClick={() => navigate('/auth/signup')}>
+        <div className="flex w-screen max-w-lg flex-col gap-4 px-8 text-center">
+          <button
+            className="button"
+            type="button"
+            onClick={() => navigate('/auth/signup')}
+          >
             Sign Up
           </button>
-          <button type="button" onClick={() => navigate('/auth/signin')}>
+          <button
+            className="button"
+            type="button"
+            onClick={() => navigate('/auth/signin')}
+          >
             Sign In
           </button>
-          <button type="button" onClick={handleContinueWithGitHub}>
-            Continue with GitHub
+          <div className="flex items-center justify-between gap-x-4 text-gray-400">
+            <span className="block h-px w-full bg-gray-400" />
+            <span>OR</span>
+            <span className="block h-px w-full bg-gray-400" />
+          </div>
+          <button
+            className="button flex items-center justify-center gap-x-2"
+            type="button"
+            onClick={handleContinueWithGitHub}
+          >
+            <img
+              className="pointer-events-none w-6"
+              aria-hidden="true"
+              tabIndex="-1"
+              src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg"
+              alt=""
+            />
+            <span>Continue with GitHub</span>
           </button>
-        </>
+          <button
+            className="button"
+            type="button"
+            onClick={handleSubmitWithDemoAccount}
+          >
+            Continue with a demo account
+          </button>
+        </div>
       )}
     </div>
   );
