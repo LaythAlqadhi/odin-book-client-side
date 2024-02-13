@@ -6,14 +6,17 @@ const useFetch = () => {
   const [error, setError] = useState(null);
 
   const fetchData = (url, token, method = 'GET', payload = null) => {
+    const isFormData = payload instanceof FormData;
+
     const options = {
       method,
       mode: 'cors',
       headers: {
-        'Content-Type': 'application/json',
+        ...(!isFormData && { 'Content-Type': 'application/json' }),
         ...(token && { Authorization: `Bearer ${token}` }),
       },
-      ...(method !== 'GET' && payload && { body: JSON.stringify(payload) }),
+      ...(method !== 'GET' &&
+        payload && { body: isFormData ? payload : JSON.stringify(payload) }),
     };
 
     setLoading(true);
