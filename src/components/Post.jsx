@@ -18,7 +18,7 @@ function Post({ post }) {
   const [areCommentsOpened, setAreCommentsOpened] = useState(false);
 
   useEffect(() => {
-    if (isLiked) {
+    if (isLiked && !post.likes.includes(payload.user.id)) {
       likesRef.current.textContent = `${post.likes.length + 1} likes`;
     } else {
       likesRef.current.textContent = `${post.likes.length} likes`;

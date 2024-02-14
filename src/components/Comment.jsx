@@ -17,7 +17,7 @@ function Comment({ comment }) {
   const { fetchData } = useFetch();
 
   useEffect(() => {
-    if (isLiked) {
+    if (isLiked && !comment.likes.includes(payload.user.id)) {
       likesRef.current.textContent = comment.likes.length + 1;
     } else {
       likesRef.current.textContent = comment.likes.length;
