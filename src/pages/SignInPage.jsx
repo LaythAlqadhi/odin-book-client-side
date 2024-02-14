@@ -38,7 +38,6 @@ function SignInPage() {
   if (data?.payload) {
     Promise.resolve().then(() => {
       signIn(data.payload);
-      navigate('/');
     });
   }
 
