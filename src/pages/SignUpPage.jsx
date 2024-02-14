@@ -20,7 +20,11 @@ function SignUpPage() {
 
   if (loading) return <LoadingSpinner />;
 
-  if (data?.user) navigate('/auth/signin');
+  if (data?.user) {
+    Promise.resolve().then(() => {
+      navigate('/auth/signin');
+    });
+  }
 
   const handleContinueWithGitHub = () => {
     window.location.href = `${API_URL}/auth/github`;
