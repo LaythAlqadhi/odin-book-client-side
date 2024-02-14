@@ -44,7 +44,7 @@ function Post({ post }) {
   return (
     <div
       data-testid="post-container"
-      className="m-4 max-w-screen-sm rounded-md border"
+      className="max-w-screen-sm w-screen rounded-md border"
     >
       <div className="flex items-center gap-2 p-4">
         <Link to={`/profile/${post.author.id}`}>
