@@ -1,11 +1,13 @@
 import React from 'react';
-import { Outlet, useOutlet, useNavigate } from 'react-router-dom';
+import { useLocation, Outlet, useOutlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import useFetch from '../hooks/useFetch';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { API_URL } from '../constants';
 
 function AuthPage() {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
   const hasOutlet = useOutlet();
   const navigate = useNavigate();
   const { signIn } = useAuth();
@@ -18,18 +20,6 @@ function AuthPage() {
   const handleSubmitWithDemoAccount = () => {
     fetchData(`${API_URL}/auth/demo`);
   };
-
-  if (navigator.cookieEnabled) {
-    // Cookies are enabled
-    console.log("Cookies are enabled");
-    document.cookie = "user=John"
-    console.log(document.cookie);
-  } else {
-    // Cookies are disabled
-    console.log("Cookies are disabled");
-    document.cookie = "user=John"
-      console.log(document.cookie);
-  }
   
   if (error) return <div>Something went wrong.</div>;
 
@@ -39,6 +29,21 @@ function AuthPage() {
   if (data?.payload) {
     Promise.resolve().then(() => {
       signIn(data.payload);
+      navigate('/');
+    });
+  }
+
+  if (queryParams.get('token')) {
+    const payload = {
+      token: queryParams.get('token'),
+      user: {
+        id: queryParams.get('id'),
+        username: queryParams.get('username'),
+      },
+    }
+    
+    Promise.resolve().then(() => {
+      signIn(payload);
       navigate('/');
     });
   }
