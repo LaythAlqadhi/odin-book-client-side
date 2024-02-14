@@ -8,8 +8,26 @@ import { API_URL } from '../constants';
 function AuthPage() {
   const hasOutlet = useOutlet();
   const navigate = useNavigate();
+  const queryParams = new URLSearchParams(
+    window.location.search
+  );
   const { signIn } = useAuth();
   const { fetchData, data, loading, error } = useFetch();
+
+  if (queryParams.get('token')) {
+    const payload = {
+      token: queryParams.get('token'),
+      user: {
+        id: queryParams.get('id'),
+        username: queryParams.get('username'),
+        profile: {
+          avatar: queryParams.get('avatar'),
+        }
+      },
+    }
+    
+    signIn(payload);
+  }
 
   const handleContinueWithGitHub = () => {
     window.location.href = `${API_URL}/auth/github`;
@@ -28,7 +46,6 @@ function AuthPage() {
   if (data?.payload) {
     Promise.resolve().then(() => {
       signIn(data.payload);
-      navigate('/');
     });
   }
 
