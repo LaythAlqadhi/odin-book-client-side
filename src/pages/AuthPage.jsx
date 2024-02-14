@@ -19,6 +19,15 @@ function AuthPage() {
     fetchData(`${API_URL}/auth/demo`);
   };
 
+  if (navigator.cookieEnabled) {
+    // Cookies are enabled
+    console.log("Cookies are enabled");
+    console.log(document.cookies);
+  } else {
+    // Cookies are disabled
+    console.log("Cookies are disabled");
+    console.log(document.cookies);
+  }
   
   if (error) return <div>Something went wrong.</div>;
 

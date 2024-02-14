@@ -8,13 +8,6 @@ const AuthContext = createContext({
 });
 
 const getPayloadWithExpiry = () => {
-  if (navigator.cookieEnabled) {
-    // Cookies are enabled
-    console.error("Cookies are enabled");
-  } else {
-    // Cookies are disabled
-    console.error("Cookies are disabled");
-  }
   const itemStr = localStorage.getItem('payload');
   if (!itemStr) {
     return null;
