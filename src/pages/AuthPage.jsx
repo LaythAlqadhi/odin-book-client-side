@@ -22,11 +22,11 @@ function AuthPage() {
   if (navigator.cookieEnabled) {
     // Cookies are enabled
     console.log("Cookies are enabled");
-    console.log(document.cookies);
+    console.log(document);
   } else {
     // Cookies are disabled
     console.log("Cookies are disabled");
-    console.log(document.cookies);
+    console.log(document);
   }
   
   if (error) return <div>Something went wrong.</div>;
