@@ -6,7 +6,6 @@ Check out the [server-side repo](https://github.com/LaythAlqadhi/odin-book-serve
 Check out the web application [Odinbook](https://odinbook-eight.vercel.app) to explore its features.
 
 ## Screenshots
-
 ![Authentication page](./public/screenshot_1.jpeg)
 ![Home page](./public/screenshot_2.jpeg)
 ![Profile page](./public/screenshot_3.jpeg)
@@ -20,17 +19,12 @@ Check out the web application [Odinbook](https://odinbook-eight.vercel.app) to e
 - Not Found Page
 
 ## Features
-- Unauthenticated users cannot access private routes.
-- Sign in or sign up using GitHub authentication method.
-- Sign in and sign up forms with immediate input validation using the Constraint Validation API.
-- Users can add post using text or images or either.
-- Users can like posts and comments.
-- Users can share posts amd profiles.
-- Users can comment on posts
-- Posts display the post content, author, comments, and likes.
-- Home page shows the recents posts.
-- Search page shows users by their name or username with buttons for sending follow requests to users the user is not already following or have a pending request or unfollow.
-- The user's profile page features their profile information, profile photo, posts, and buttons customized to their role. For owners, these buttons allow editing and sharing of their profiles, whereas visitors can send follow requests to users the user is not already following or have a pending request or unfollow.
+- Enabled post creation, liking, commenting, and sharing.
+- Designed intuitive page layouts displaying post content, author info, comments, and likes.
+- Implemented Search functionality for user discovery, allowing users to find others by name or username.
+- Ensured robust authentication using JWT, supporting username-password and GitHub methods.
+- Customized user profiles with personalized info and role-specific buttons.
+- Prioritized responsive design and accessibility compliance to ensure seamless user experience across devices and inclusivity for all users.
 
 ## Installation
 
