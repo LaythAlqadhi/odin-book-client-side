@@ -64,7 +64,7 @@ function Post({ post }) {
       </div>
       <div className="flex flex-col gap-4">
         {post.content.text && (
-          <p className="px-4 text-lg">{post.content.text}</p>
+          <p className="px-4 text-lg break-words">{post.content.text}</p>
         )}
         {post.content.media && (
           <img src={post.content.media} alt="" loading="lazy" />

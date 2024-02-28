@@ -51,7 +51,7 @@ function Comment({ comment }) {
             {formatDate(comment.createdAt, true)}
           </span>
         </div>
-        <p>{comment.content}</p>
+        <p className="break-words">{comment.content}</p>
       </div>
       <div className="flex flex-col items-center justify-center">
         <button type="button" aria-label="Like" onClick={handleLikeClick}>
